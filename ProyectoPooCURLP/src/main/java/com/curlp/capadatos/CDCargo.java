@@ -42,6 +42,33 @@ public class CDCargo {
         
         }
     }
+    //METODO PARA BUSCAR 
+    public List<CLCargo> busquedaCita(int nombre) throws SQLException {
+        String sql;
+
+        sql = "{call sp_mostrarCargoId(?)}";
+
+        List<CLCargo> miLista = null;
+
+        try {
+            ps = cn.prepareStatement(sql);
+            ps.setInt(1,nombre);
+            rs = ps.executeQuery();
+
+            miLista = new ArrayList<>();
+
+            while (rs.next()) {
+                CLCargo cl = new CLCargo();
+                cl.setIdCargo(rs.getInt("idCargo"));
+                cl.setCargo(rs.getString("cargo"));
+                miLista.add(cl);
+                
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+        }
+        return miLista;
+    }
     //Metodo para actualizar cargo
     public void actualizarCargo(CLCargo cl) {
         String sql = "{CALL sp_actualizarCargo(?,?)}";

@@ -51,6 +51,21 @@ public class JFraCargo extends javax.swing.JFrame {
         }).forEachOrdered(temp::addRow);
     
     }
+    //poblar tabla cargo
+    private void BusquedaCargo(int idcargo) throws SQLException {
+        limpiarTabla();
+        CDCargo cm = new CDCargo();
+        List<CLCargo> myList = cm.busquedaCita(idcargo);
+        DefaultTableModel temp = (DefaultTableModel) this.jTblCargo.getModel();
+        
+        myList.stream().map((CLCargo cd) -> {
+            Object[] fila = new Object[2];
+            fila[0] = cd.getIdCargo();
+            fila[1] = cd.getCargo();
+            return fila;
+        }).forEachOrdered(temp::addRow);
+    
+    }
     
     
     private void encontrarCorrelativo() throws SQLException{
@@ -170,9 +185,8 @@ public class JFraCargo extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
-        jBtnFiltrarPor = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
-        jTFIdentidadFiltrarBorrar = new javax.swing.JTextField();
+        jTFFiltrar = new javax.swing.JTextField();
         jBthMostrar = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -200,11 +214,13 @@ public class JFraCargo extends javax.swing.JFrame {
         jPanel5.setBackground(new java.awt.Color(79, 198, 203));
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Mas Opciones", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
-        jBtnFiltrarPor.setBackground(new java.awt.Color(255, 255, 204));
-        jBtnFiltrarPor.setFont(new java.awt.Font("DejaVu Math TeX Gyre", 1, 14)); // NOI18N
-        jBtnFiltrarPor.setText("Buscar");
+        jLabel12.setText("Buscar por Id Cargo");
 
-        jLabel12.setText("Id Cargo");
+        jTFFiltrar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTFFiltrarKeyReleased(evt);
+            }
+        });
 
         jBthMostrar.setBackground(new java.awt.Color(255, 255, 255));
         jBthMostrar.setFont(new java.awt.Font("DejaVu Math TeX Gyre", 1, 14)); // NOI18N
@@ -220,17 +236,15 @@ public class JFraCargo extends javax.swing.JFrame {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel12)
-                    .addComponent(jBtnFiltrarPor, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTFIdentidadFiltrarBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jBthMostrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(jBthMostrar)))
-                .addGap(53, 53, 53))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTFFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(16, 16, 16))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -238,11 +252,9 @@ public class JFraCargo extends javax.swing.JFrame {
                 .addGap(3, 3, 3)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
-                    .addComponent(jTFIdentidadFiltrarBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTFFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jBthMostrar, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
-                    .addComponent(jBtnFiltrarPor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jBthMostrar, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -384,7 +396,7 @@ public class JFraCargo extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -538,6 +550,22 @@ public class JFraCargo extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_RegresarMouseClicked
 
+    private void jTFFiltrarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFFiltrarKeyReleased
+        if (this.jTFFiltrar.getText().equals("")) {
+            try {
+                poblarTablaCargo();
+            } catch (SQLException ex) {
+                Logger.getLogger(JFraConsultaMedica.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            try {
+            BusquedaCargo(Integer.parseInt(this.jTFFiltrar.getText()));
+        } catch (SQLException ex) {
+            Logger.getLogger(JFraConsultaMedica.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }
+    }//GEN-LAST:event_jTFFiltrarKeyReleased
+
     /**
      * @param args the command line arguments
      */
@@ -582,7 +610,6 @@ public class JFraCargo extends javax.swing.JFrame {
     private javax.swing.JButton jBthMostrar;
     private javax.swing.JButton jBtnEditar;
     private javax.swing.JButton jBtnEliminar;
-    private javax.swing.JButton jBtnFiltrarPor;
     private javax.swing.JButton jBtnIngresar;
     private javax.swing.JButton jBtnLimpiar;
     private javax.swing.JLabel jLabel1;
@@ -598,8 +625,8 @@ public class JFraCargo extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTFCargo;
+    private javax.swing.JTextField jTFFiltrar;
     private javax.swing.JTextField jTFIdCargo;
-    private javax.swing.JTextField jTFIdentidadFiltrarBorrar;
     private javax.swing.JTable jTblCargo;
     // End of variables declaration//GEN-END:variables
 }

@@ -20,6 +20,15 @@ public class CLCitaMedica {
     private String nombreUsuario;
     private String nombreEmpleado;
     private String nombrePaciente;
+    private String cargo;
+
+    public String getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
+    }
 
     public String getNombreEmpleado() {
         return nombreEmpleado;

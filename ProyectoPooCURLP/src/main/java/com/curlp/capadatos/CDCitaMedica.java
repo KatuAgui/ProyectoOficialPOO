@@ -60,8 +60,9 @@ public class CDCitaMedica {
             ps.setString(2, cl.getFecha());
             ps.setString(3,cl.getHoraInicio());
             ps.setString(4, cl.getHoraFinal());
-            ps.setInt(5, cl.getIdUsuario());
-            ps.setString(6, cl.getNumeroIdentidad());
+            ps.setString(5, cl.getNumeroIdentidad());
+            ps.setInt(6, cl.getIdUsuario());
+            
             ps.execute();
            
             
@@ -118,6 +119,8 @@ public class CDCitaMedica {
             miLista = new ArrayList<>();
             while(rs.next()) {
                 CLCitaMedica cl = new CLCitaMedica();
+                cl.setNumeroIdentidad(rs.getString("citaMedicaNumeroIdentidad"));
+                cl.setNombrePaciente(rs.getString("nombrepaciente"));
                 cl.setIdCitaMedica(rs.getInt("idCitaMedica"));
                 cl.setObservaciones(rs.getString("citaMedicaObservaciones"));
                 cl.setFecha(rs.getString("citaMedicaFecha"));
@@ -126,8 +129,7 @@ public class CDCitaMedica {
                 cl.setIdUsuario(rs.getInt("idUsuario"));
                 cl.setNombreUsuario(rs.getString("nombreUsuario"));
                 cl.setNombreEmpleado(rs.getString("nombreEmpleado"));
-                cl.setNumeroIdentidad(rs.getString("citaMedicaNumeroIdentidad"));
-                cl.setNombrePaciente(rs.getString("nombrepaciente"));
+                cl.setCargo(rs.getString("cargo"));
                 miLista.add(cl);
             }
             
@@ -138,7 +140,7 @@ public class CDCitaMedica {
         return miLista;
         
     }
-    //METODO PARA BUSCAR ABONADOS EN AUTOCOMPLETADO
+    //METODO PARA BUSCAR 
     public List<CLCitaMedica> busquedaCita(String nombre) throws SQLException {
         String sql;
 
@@ -155,7 +157,8 @@ public class CDCitaMedica {
 
             while (rs.next()) {
                 CLCitaMedica cl = new CLCitaMedica();
-
+                cl.setNumeroIdentidad(rs.getString("citaMedicaNumeroIdentidad"));
+                cl.setNombrePaciente(rs.getString("nombrepaciente"));
                 cl.setIdCitaMedica(rs.getInt("idCitaMedica"));
                 cl.setObservaciones(rs.getString("citaMedicaObservaciones"));
                 cl.setFecha(rs.getString("citaMedicaFecha"));
@@ -164,8 +167,8 @@ public class CDCitaMedica {
                 cl.setIdUsuario(rs.getInt("idUsuario"));
                 cl.setNombreUsuario(rs.getString("nombreUsuario"));
                 cl.setNombreEmpleado(rs.getString("nombreEmpleado"));
-                cl.setNumeroIdentidad(rs.getString("citaMedicaNumeroIdentidad"));
-                cl.setNombrePaciente(rs.getString("nombrepaciente"));
+                cl.setCargo(rs.getString("cargo"));
+                
                 miLista.add(cl);
             }
         } catch (SQLException e) {
