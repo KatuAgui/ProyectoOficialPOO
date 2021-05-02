@@ -118,12 +118,12 @@ public class CDEmpleado {
             miLista = new ArrayList<>();
             while(rs.next()) {
                 CLEmpleado cl = new CLEmpleado();
-                cl.setPrimerNombre(rs.getString("primerNombre"));
-                cl.setSegundoNombre(rs.getString("segundoNombre"));
-                cl.setPrimerApellido(rs.getString("primerApellido"));
-                cl.setPrimerApellido(rs.getString("segundoApellido"));
-                cl.setDireccion(rs.getString("direccion"));
-                cl.setTelefonoCelular(rs.getString("telefonoCelular"));
+                cl.setPrimerNombre(rs.getString("empleadoPrimerNombre"));
+                cl.setSegundoNombre(rs.getString("empleadoSegundoNombre"));
+                cl.setPrimerApellido(rs.getString("empleadoPrimerApellido"));
+                cl.setPrimerApellido(rs.getString("empleadoSegundoApellido"));
+                cl.setDireccion(rs.getString("empleadoDireccion"));
+                cl.setTelefonoCelular(rs.getString("empleadoTelefonoCelular"));
                 cl.setIdCargo(rs.getInt("idCargo"));
                 cl.setIdEstado(rs.getInt("idEstado"));
                 miLista.add(cl);
