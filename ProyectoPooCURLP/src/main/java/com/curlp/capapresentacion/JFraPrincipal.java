@@ -150,6 +150,11 @@ public class JFraPrincipal extends javax.swing.JFrame {
         jBtnPaciente.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jBtnPaciente.setText("Paciente");
         jBtnPaciente.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jBtnPaciente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jBtnPacienteMouseClicked(evt);
+            }
+        });
         jBtnPaciente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnPacienteActionPerformed(evt);
@@ -417,6 +422,15 @@ public class JFraPrincipal extends javax.swing.JFrame {
         
         this.dispose();
     }//GEN-LAST:event_jBtnCargoMouseClicked
+
+    private void jBtnPacienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBtnPacienteMouseClicked
+         try {
+            JFraPaciente paci = new JFraPaciente();
+            paci.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(JFraPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jBtnPacienteMouseClicked
 
     /**
      * @param args the command line arguments

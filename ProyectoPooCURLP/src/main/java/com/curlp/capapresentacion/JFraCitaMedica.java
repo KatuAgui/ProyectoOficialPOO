@@ -55,7 +55,7 @@ public class JFraCitaMedica extends javax.swing.JFrame {
             fila[2] = cd.getFecha();
             fila[3] = cd.getHoraInicio();
             fila[4] = cd.getHoraFinal();
-            fila[5] = cd.getHoraFinal();
+            fila[5] = cd.getIdUsuario();
             fila[6] = cd.getNombreUsuario();
             fila[7] = cd.getNombreEmpleado();
             fila[8] = cd.getNumeroIdentidad();
@@ -71,12 +71,17 @@ public class JFraCitaMedica extends javax.swing.JFrame {
         clc.setIdCitaMedica(cdc.autoIncrementarCitaId());
         this.jTFIdCita.setText(String.valueOf(clc.getIdCitaMedica()));
     }
+    
     private void limpiarTextField(){
+        
         this.jTFIdCita.setText("");
         this.jTFObservaciones.setText("");
         this.jTFFecha.setText("");
         this.jTFHoraInicio.setText("");
         this.jTFHoraFinal.setText("");
+        this.jTFIdentidad.setText("");
+        this.jTFIdUsuario.setText("");
+        
     }
     private void limpiarIdentidad(){
         this.jTFIdentidadN.setText("");
@@ -110,7 +115,7 @@ public class JFraCitaMedica extends javax.swing.JFrame {
             this.jTFObservaciones.requestFocus();
         }else{
             if(!validadTexFielF()) {JOptionPane.showMessageDialog(null, "Tiene que ingresar la fecha de creacion","SistemaClinico",JOptionPane.INFORMATION_MESSAGE);
-            this.jTFFecha.requestFocus();
+            
             }else{
                 if(!validadTexFielHi()) {
                     JOptionPane.showMessageDialog(null, "Tiene que ingresar la Hora de inicio","SistemaClinico",JOptionPane.INFORMATION_MESSAGE);
@@ -127,8 +132,9 @@ public class JFraCitaMedica extends javax.swing.JFrame {
                         clc.setFecha(this.jTFFecha.getText().trim());
                         clc.setHoraInicio(this.jTFHoraInicio.getText().trim());
                         clc.setHoraFinal(this.jTFHoraFinal.getText().trim());
-                        clc.getIdUsuario();
-                        clc.getNumeroIdentidad();
+                        clc.setNumeroIdentidad(this.jTFIdentidad.getText().trim());
+                        clc.setIdUsuario(Integer.parseInt(this.jTFIdUsuario.getText().trim()));
+                        
                         cdc.insertarCitaMedica(clc);
                         JOptionPane.showMessageDialog(null, "Ingresado correctamente","SistemaClinico",JOptionPane.INFORMATION_MESSAGE);
                         
@@ -356,6 +362,11 @@ public class JFraCitaMedica extends javax.swing.JFrame {
         jBtnLimpiar.setBackground(new java.awt.Color(79, 198, 203));
         jBtnLimpiar.setFont(new java.awt.Font("DejaVu Math TeX Gyre", 1, 12)); // NOI18N
         jBtnLimpiar.setText("Limpiar");
+        jBtnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnLimpiarActionPerformed(evt);
+            }
+        });
 
         jBtnEliminar.setBackground(new java.awt.Color(79, 198, 203));
         jBtnEliminar.setFont(new java.awt.Font("DejaVu Math TeX Gyre", 1, 12)); // NOI18N
@@ -677,6 +688,10 @@ public class JFraCitaMedica extends javax.swing.JFrame {
     private void jBtnFiltrarPorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnFiltrarPorActionPerformed
         
     }//GEN-LAST:event_jBtnFiltrarPorActionPerformed
+
+    private void jBtnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnLimpiarActionPerformed
+        limpiarTextField();
+    }//GEN-LAST:event_jBtnLimpiarActionPerformed
 
     /**
      * @param args the command line arguments
