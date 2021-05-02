@@ -89,24 +89,6 @@ public class JFraConsultaMedica extends javax.swing.JFrame {
     
     }
     
-    private void busquedaFiltrada() throws SQLException{
-        limpiarTabla();
-        CDConsultaMedica cdcm = new CDConsultaMedica();
-        CLConsultaMedica cl = new CLConsultaMedica();
-         try {
-
-            cl.setNumeroIdentidad(this.jTFNumeroIdentidadBusquedaFiltrada.getText().trim());
-            cdcm.obtenerListaConsultaMedicaX();
-            poblarTablaConsultas();
-            
-            JOptionPane.showMessageDialog(null, "Encontrado Exitosamente ", "SIMEC",1);
-
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "error al buscar el registro: " + ex);
-
-        }
-        
-    }
     
     private boolean validarTFFechaIngreso(){
         boolean estado;
@@ -168,6 +150,37 @@ public class JFraConsultaMedica extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Error al almacenar el registro: " + e);
             }
         }
+    }
+    
+    private void busquedaFiltrada(String identidad) throws SQLException{
+        limpiarTabla();
+        CDConsultaMedica cdcm = new CDConsultaMedica();
+        List<CLConsultaMedica> miList = cdcm.obtenerListaConsultaMedicaX(identidad);
+        DefaultTableModel dtm = (DefaultTableModel) this.jTblConsultasMedicas.getModel();
+
+        miList.stream().map((CLConsultaMedica cd) -> {
+            Object[] fila = new Object[19];
+            fila[0] = cd.getNumeroIdentidad();
+            fila[1] = cd.getPrimerNombre();
+            fila[2] = cd.getSegundoNombre();
+            fila[3] = cd.getPrimerApellido();
+            fila[4] = cd.getSegundoApellido();
+            fila[5] = cd.getAntecentesFamiliares();
+            fila[6] = cd.getDireccion();
+            fila[7] = cd.getTelefonoCelular();
+            fila[8] = cd.getPeso();
+            fila[9] = cd.getEstatura();
+            fila[10] = cd.getSexo();
+            fila[11] = cd.getFechaIngreso();
+            fila[12] = cd.getObservaciones();
+            fila[13] = cd.getRecetasMedicas();
+            fila[14] = cd.getNombreUsuario();
+            fila[15] = cd.getUsuarioPrimerNombre();
+            fila[16] = cd.getUsuarioPrimerApellido();
+            fila[17] = cd.getCargo();
+            fila[18] = cd.getIdUsuario();
+            return fila;
+        }).forEachOrdered(dtm::addRow);
     }
     
     private void editarConsultaMedica () throws SQLException{
@@ -235,7 +248,6 @@ public class JFraConsultaMedica extends javax.swing.JFrame {
         this.Regresar = Regresar;
         this.jBtnActivarBusqedaFiltrada = jBtnActivarBusqedaFiltrada;
         this.jBtnAgregarNuevaConsulta = jBtnAgregarNuevaConsulta;
-        this.jBtnBuscar = jBtnBuscar;
         this.jBtnEditarConsulta = jBtnEditarConsulta;
         this.jBtnEliminarConsulta = jBtnEliminarConsulta;
         this.jBtnLimpiarCampos = jBtnLimpiarCampos;
@@ -302,7 +314,6 @@ public class JFraConsultaMedica extends javax.swing.JFrame {
         jBtnActivarBusqedaFiltrada = new javax.swing.JButton();
         jTFNumeroIdentidadBusquedaFiltrada = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jBtnBuscar = new javax.swing.JButton();
         jBtnLimpiarControles = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -472,18 +483,14 @@ public class JFraConsultaMedica extends javax.swing.JFrame {
             }
         });
 
-        jTFNumeroIdentidadBusquedaFiltrada.setEnabled(false);
+        jTFNumeroIdentidadBusquedaFiltrada.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTFNumeroIdentidadBusquedaFiltradaKeyReleased(evt);
+            }
+        });
 
         jLabel2.setForeground(new java.awt.Color(1, 1, 1));
         jLabel2.setText("Ingrese # de Identidad Para Buscar o Eliminar una consulta");
-
-        jBtnBuscar.setText("Buscar");
-        jBtnBuscar.setEnabled(false);
-        jBtnBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtnBuscarActionPerformed(evt);
-            }
-        });
 
         jBtnLimpiarControles.setText("Limpiar");
         jBtnLimpiarControles.addActionListener(new java.awt.event.ActionListener() {
@@ -510,8 +517,6 @@ public class JFraConsultaMedica extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jTFNumeroIdentidadBusquedaFiltrada, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jBtnBuscar)
-                        .addGap(18, 18, 18)
                         .addComponent(jBtnActivarBusqedaFiltrada))
                     .addComponent(jLabel2))
                 .addContainerGap(40, Short.MAX_VALUE))
@@ -525,13 +530,12 @@ public class JFraConsultaMedica extends javax.swing.JFrame {
                     .addComponent(jBtnEditarConsulta)
                     .addComponent(jBtnEliminarConsulta)
                     .addComponent(jBtnLimpiarControles))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTFNumeroIdentidadBusquedaFiltrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnActivarBusqedaFiltrada)
-                    .addComponent(jBtnBuscar))
+                    .addComponent(jBtnActivarBusqedaFiltrada))
                 .addGap(17, 17, 17))
         );
 
@@ -661,7 +665,6 @@ public class JFraConsultaMedica extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnAgregarNuevaConsultaActionPerformed
 
     private void jBtnActivarBusqedaFiltradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnActivarBusqedaFiltradaActionPerformed
-        this.jBtnBuscar.setEnabled(true);
         this.jTFNumeroIdentidadBusquedaFiltrada.setEnabled(true);
     }//GEN-LAST:event_jBtnActivarBusqedaFiltradaActionPerformed
 
@@ -694,13 +697,21 @@ public class JFraConsultaMedica extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jBtnEliminarConsultaActionPerformed
 
-    private void jBtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBuscarActionPerformed
-        try {
-            busquedaFiltrada();
+    private void jTFNumeroIdentidadBusquedaFiltradaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFNumeroIdentidadBusquedaFiltradaKeyReleased
+        if (this.jTFNumeroIdentidadBusquedaFiltrada.getText().equals("")) {
+            try {
+                poblarTablaConsultas();
+            } catch (SQLException ex) {
+                Logger.getLogger(JFraConsultaMedica.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            try {
+            busquedaFiltrada(this.jTFNumeroIdentidadBusquedaFiltrada.getText());
         } catch (SQLException ex) {
             Logger.getLogger(JFraConsultaMedica.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jBtnBuscarActionPerformed
+        }
+    }//GEN-LAST:event_jTFNumeroIdentidadBusquedaFiltradaKeyReleased
 
     /**
      * @param args the command line arguments
@@ -745,7 +756,6 @@ public class JFraConsultaMedica extends javax.swing.JFrame {
     private javax.swing.JButton Regresar;
     private javax.swing.JButton jBtnActivarBusqedaFiltrada;
     private javax.swing.JButton jBtnAgregarNuevaConsulta;
-    private javax.swing.JButton jBtnBuscar;
     private javax.swing.JButton jBtnEditarConsulta;
     private javax.swing.JButton jBtnEliminarConsulta;
     private javax.swing.JButton jBtnLimpiarCampos;

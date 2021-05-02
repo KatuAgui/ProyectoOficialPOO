@@ -120,17 +120,17 @@ public class CDConsultaMedica {
     
     //busqeda filtrada
     
-    public List<CLConsultaMedica> obtenerListaConsultaMedicaX() throws SQLException {
-        
+    public List<CLConsultaMedica> obtenerListaConsultaMedicaX(String identidad) throws SQLException{
         String sql = "{CALL sp_mostrarConsultaX(?)}";
         List<CLConsultaMedica> miList = null;
         try {
-            st = cn.createStatement();
-            rs = st.executeQuery(sql);
+            ps = cn.prepareStatement(sql);
+            ps.setString(1, identidad);
+            rs = ps.executeQuery();
             
             miList = new ArrayList<>();
             while(rs.next()) {
-                CLConsultaMedica cl = new CLConsultaMedica();
+                CLConsultaMedica cl = new CLConsultaMedica();                             
                 cl.setIdConsultasMedicas(rs.getInt("idConsultasMedicas"));
                 cl.setNumeroIdentidad(rs.getString("consultaMedicaNumeroIdentidad"));
                 cl.setPrimerNombre(rs.getString("pacientePrimerNombre"));

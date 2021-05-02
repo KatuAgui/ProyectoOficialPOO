@@ -348,8 +348,6 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jTFNumeroIdentidadBusquedaFiltrada" min="-2" pref="200" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jBtnBuscar" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="jBtnActivarBusqedaFiltrada" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -368,13 +366,12 @@
                           <Component id="jBtnEliminarConsulta" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jBtnLimpiarControles" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="35" max="32767" attributes="0"/>
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jTFNumeroIdentidadBusquedaFiltrada" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jBtnActivarBusqedaFiltrada" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jBtnBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                   </Group>
@@ -415,9 +412,9 @@
               </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="jTFNumeroIdentidadBusquedaFiltrada">
-              <Properties>
-                <Property name="enabled" type="boolean" value="false"/>
-              </Properties>
+              <Events>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTFNumeroIdentidadBusquedaFiltradaKeyReleased"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel2">
               <Properties>
@@ -426,15 +423,6 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Ingrese # de Identidad Para Buscar o Eliminar una consulta"/>
               </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="jBtnBuscar">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Buscar"/>
-                <Property name="enabled" type="boolean" value="false"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnBuscarActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jBtnLimpiarControles">
               <Properties>
