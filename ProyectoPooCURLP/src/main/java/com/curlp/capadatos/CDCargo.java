@@ -139,8 +139,33 @@ public class CDCargo {
         }
         return miLista;
     }
-    //Metodo para insertar un nueva cargo en la tabla
-    
+    //Busqueda
+    public List<CLCargo> busquedaCargo(int nombre) throws SQLException {
+        String sql;
+
+        sql = "{call sp_mostrarCargoId(?)}";
+
+        List<CLCargo> miLista = null;
+
+        try {
+            ps = cn.prepareStatement(sql);
+            ps.setInt(1,nombre);
+            rs = ps.executeQuery();
+
+            miLista = new ArrayList<>();
+
+            while (rs.next()) {
+                CLCargo cla = new CLCargo();
+
+                cla.setIdCargo(rs.getInt("idCargo"));
+                cla.setCargo(rs.getString("cargo"));
+                miLista.add(cla);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+        }
+        return miLista;
+    }
 
    
     

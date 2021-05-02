@@ -138,4 +138,39 @@ public class CDCitaMedica {
         return miLista;
         
     }
+    //METODO PARA BUSCAR ABONADOS EN AUTOCOMPLETADO
+    public List<CLCitaMedica> busquedaCita(String nombre) throws SQLException {
+        String sql;
+
+        sql = "{call sp_mostrarPorNumeroIdentidad(?)}";
+
+        List<CLCitaMedica> miLista = null;
+
+        try {
+            ps = cn.prepareStatement(sql);
+            ps.setString(1,nombre);
+            rs = ps.executeQuery();
+
+            miLista = new ArrayList<>();
+
+            while (rs.next()) {
+                CLCitaMedica cl = new CLCitaMedica();
+
+                cl.setIdCitaMedica(rs.getInt("idCitaMedica"));
+                cl.setObservaciones(rs.getString("citaMedicaObservaciones"));
+                cl.setFecha(rs.getString("citaMedicaFecha"));
+                cl.setHoraInicio(rs.getString("citaMedicaHoraInicio"));
+                cl.setHoraFinal(rs.getString("citaMedicaHoraFinal"));
+                cl.setIdUsuario(rs.getInt("idUsuario"));
+                cl.setNombreUsuario(rs.getString("nombreUsuario"));
+                cl.setNombreEmpleado(rs.getString("nombreEmpleado"));
+                cl.setNumeroIdentidad(rs.getString("citaMedicaNumeroIdentidad"));
+                cl.setNombrePaciente(rs.getString("nombrepaciente"));
+                miLista.add(cl);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+        }
+        return miLista;
+    }
 }
