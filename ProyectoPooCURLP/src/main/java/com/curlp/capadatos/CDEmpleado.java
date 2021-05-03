@@ -53,17 +53,18 @@ public class CDEmpleado {
     
     //Metodo para actualizar empleado en la tabla
     public void actualizarEmpleado(CLEmpleado cl) {
-        String sql = "{CALL sp_actualizarEmpleado(?,?,?,?,?,?,?,?)}";
+        String sql = "{CALL sp_actualizarEmpleado(?,?,?,?,?,?,?,?,?)}";
         try{
-            ps = cn.prepareCall(sql);
-            ps.setString(1, cl.getPrimerNombre());
-            ps.setString(2, cl.getSegundoNombre());
-            ps.setString(3, cl.getPrimerApellido());
-            ps.setString(4, cl.getSegundoApellido());
-            ps.setString(5, cl.getDireccion());
-            ps.setString(6, cl.getTelefonoCelular());
-            ps.setInt(7, cl.getIdCargo());
-            ps.setInt(8, cl.getIdEstado());
+            ps = cn.prepareCall(sql);               
+            ps.setInt(1, cl.getIdEmpleado());
+            ps.setString(2, cl.getPrimerNombre());
+            ps.setString(3, cl.getSegundoNombre());
+            ps.setString(4, cl.getPrimerApellido());
+            ps.setString(5, cl.getSegundoApellido());
+            ps.setString(6, cl.getDireccion());
+            ps.setString(7, cl.getTelefonoCelular());
+            ps.setInt(8, cl.getIdCargo());
+            ps.setInt(9, cl.getIdEstado());
             ps.execute();
            
             
@@ -111,6 +112,34 @@ public class CDEmpleado {
     //Metodo para poblar tabla
     public List<CLEmpleado> obtenerListaEmpleados() throws SQLException{
         String sql = "{CALL sp_mostrarEmpleados()}";
+        List<CLEmpleado> miLista = null;
+        try{
+            st = cn.createStatement();
+            rs = st.executeQuery(sql);
+            miLista = new ArrayList<>();
+            while(rs.next()) {
+                CLEmpleado cl = new CLEmpleado();
+                cl.setIdEmpleado(rs.getInt("IdEmpleado"));
+                cl.setPrimerNombre(rs.getString("empleadoPrimerNombre"));
+                cl.setSegundoNombre(rs.getString("empleadoSegundoNombre"));
+                cl.setPrimerApellido(rs.getString("empleadoPrimerApellido"));
+                cl.setSegundoApellido(rs.getString("empleadoSegundoApellido"));
+                cl.setDireccion(rs.getString("empleadoDireccion"));
+                cl.setTelefonoCelular(rs.getString("empleadoTelefonoCelular"));
+                cl.setIdCargo(rs.getInt("idCargo"));
+                cl.setIdEstado(rs.getInt("idEstado"));
+                miLista.add(cl);
+            }
+            
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "error: "+ e.getMessage());
+        
+        }
+        return miLista;   
+    }
+    
+    public List<CLEmpleado> obtenerListaEmpleado(String idEmpleado) throws SQLException{
+        String sql = "{CALL sp_mostrarEmpleado(?)}";
         List<CLEmpleado> miLista = null;
         try{
             st = cn.createStatement();

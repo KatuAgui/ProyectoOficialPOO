@@ -5,7 +5,9 @@
  */
 package com.curlp.capapresentacion;
 
+import com.curlp.capadatos.CDConsultaMedica;
 import com.curlp.capadatos.CDEmpleado;
+import com.curlp.capalogica.CLConsultaMedica;
 import com.curlp.capalogica.CLEmpleado;
 import java.sql.SQLException;
 import java.util.List;
@@ -102,35 +104,39 @@ public class JfraEmpleados extends javax.swing.JFrame {
         }).forEachOrdered(temp::addRow);
     }
     
-    private void busquedaFiltrada() throws SQLException{
-        limpiarTabla();
+    private void busquedaFiltrada(String idEmpleado) throws SQLException{
+   limpiarTabla();
         CDEmpleado cdcm = new CDEmpleado();
-        CLEmpleado cl = new CLEmpleado();
-         try {
+        List<CLEmpleado> miList = cdcm.obtenerListaEmpleado(idEmpleado);
+        DefaultTableModel dtm = (DefaultTableModel) this.jTblEmpleados.getModel();
 
-            cl.setIdEmpleado(Integer.parseInt(this.jTFIdEmpleado.toString()));
-            //cdcm.obtenerListaEmpleadoX;
-            poblarTablaEmpleados();           
-            JOptionPane.showMessageDialog(null, "Encontrado Exitosamente ", "SIMEC",1);
-
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "error al buscar el registro: " + ex);
-
-        }
+        miList.stream().map((CLEmpleado cd) -> {
+            Object[] fila = new Object[19];
+            fila[0] = cd.getIdEmpleado();
+            fila[1] = cd.getPrimerNombre();
+            fila[2] = cd.getSegundoNombre();
+            fila[3] = cd.getPrimerApellido();
+            fila[4] = cd.getSegundoApellido();
+            fila[5] = cd.getDireccion();
+            fila[6] = cd.getTelefonoCelular();
+            fila[7] = cd.getIdCargo();
+            fila[8] = cd.getIdEstado();
+            return fila;
+        }).forEachOrdered(dtm::addRow);
         
     }
     private void insertarEmpleado(){
         if (validarTFPrimerNombre()) {
-            JOptionPane.showMessageDialog(null, "Debe ingresar la fecha de ingreso","SIMEC",1);
+            JOptionPane.showMessageDialog(null, "Debe ingresar el primer nombre","SIMEC",1);
             this.jTFPrimerApellido.requestFocus();
         }else if (validarTFPrimerApellido()){
-            JOptionPane.showMessageDialog(null, "Debe ingresar Observaciones","SIMEC",1);
+            JOptionPane.showMessageDialog(null, "Debe ingresar el primer apellido ","SIMEC",1);
             this.jTFDireccion.requestFocus();
         }else if (validarTFDireccion()) {
-            JOptionPane.showMessageDialog(null, "Debe ingresar las recetas medicas","SIMEC",1);
+            JOptionPane.showMessageDialog(null, "Debe ingresar la direccion","SIMEC",1);
             this.jTFTelefonoCelular.requestFocus();
         }else if (validarTFTelefonoCelular()){
-            JOptionPane.showMessageDialog(null, "Debe ingresar el Numero de Identidad","SIMEC",1);
+            JOptionPane.showMessageDialog(null, "Debe ingresar el telefono celular ","SIMEC",1);
             this.jTFTelefonoCelular.requestFocus();  
         }else{
             try {
@@ -152,6 +158,8 @@ public class JfraEmpleados extends javax.swing.JFrame {
         }
     }
     
+    
+    
      private void guardar () throws SQLException{
         insertarEmpleado();
         poblarTablaEmpleados();
@@ -162,10 +170,13 @@ public class JfraEmpleados extends javax.swing.JFrame {
         CLEmpleado cl = new CLEmpleado();
         
         try {
+                cl.setIdEmpleado(Integer.parseInt(this.jTFIdEmpleado.getText().trim()));
                 cl.setPrimerNombre(this.jTFPrimerNombre.getText().trim());
                 cl.setSegundoNombre(this.jTFSegundoNombre.getText().trim());
                 cl.setPrimerApellido(this.jTFPrimerApellido.getText().trim());
                 cl.setSegundoApellido(this.jTFSegundoApellido.getText().trim());
+                cl.setDireccion(this.jTFDireccion.getText().trim());
+                cl.setTelefonoCelular(this.jTFTelefonoCelular.getText().trim());
                 cl.setIdCargo(Integer.valueOf(this.jTFIdCargo.getText().trim()));
                 cl.setIdEstado(Integer.valueOf(this.jTFIdEstado.getText().trim()));
                 cdcm.actualizarEmpleado(cl);
@@ -174,15 +185,27 @@ public class JfraEmpleados extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error al actualizar el registro: " + e);
         }
     }
+     
+      private void filaSelecionada (){
+        if (this.jTblEmpleados.getSelectedRow() != -1){
+            this.jTFIdEmpleado.setText(String.valueOf(this.jTblEmpleados.getValueAt(this.jTblEmpleados.getSelectedRow(), 0)));
+            this.jTFPrimerNombre.setText(String.valueOf(this.jTblEmpleados.getValueAt(this.jTblEmpleados.getSelectedRow(), 1)));
+            this.jTFSegundoNombre.setText(String.valueOf(this.jTblEmpleados.getValueAt(this.jTblEmpleados.getSelectedRow(), 2)));
+            this.jTFPrimerApellido.setText(String.valueOf(this.jTblEmpleados.getValueAt(this.jTblEmpleados.getSelectedRow(), 3)));
+            this.jTFSegundoApellido.setText(String.valueOf(this.jTblEmpleados.getValueAt(this.jTblEmpleados.getSelectedRow(), 4)));
+            this.jTFDireccion.setText(String.valueOf(this.jTblEmpleados.getValueAt(this.jTblEmpleados.getSelectedRow(), 5)));
+            this.jTFTelefonoCelular.setText(String.valueOf(this.jTblEmpleados.getValueAt(this.jTblEmpleados.getSelectedRow(), 6)));
+            this.jTFIdCargo.setText(String.valueOf(this.jTblEmpleados.getValueAt(this.jTblEmpleados.getSelectedRow(), 7)));
+            this.jTFIdEstado.setText(String.valueOf(this.jTblEmpleados.getValueAt(this.jTblEmpleados.getSelectedRow(), 8)));
+        }
+    }
     
     private void eliminarEmpleado() throws SQLException{
         CDEmpleado cdcm = new CDEmpleado();
         CLEmpleado cl = new CLEmpleado();
         try {
-
             cl.setIdEmpleado(Integer.parseInt(this.jTFIdEmpleado.toString()));
-            cdcm.eliminarEmpleado(cl);
-            
+            cdcm.eliminarEmpleado(cl);           
             JOptionPane.showMessageDialog(null, "Eliminado exitosamente ", "Control",
                     JOptionPane.INFORMATION_MESSAGE);
 
@@ -206,6 +229,11 @@ public class JfraEmpleados extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "error " + ex);
             }
         }
+    }
+    
+    private void editar () throws SQLException {
+        editarEmpleado();
+        poblarTablaEmpleados();
     }
     
     private void encontrarCorrelativo() throws SQLException{
@@ -463,10 +491,21 @@ public class JfraEmpleados extends javax.swing.JFrame {
         jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder("Mas Opciones"));
 
         jBtnEliminarEmpleados.setText("Eliminar");
+        jBtnEliminarEmpleados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnEliminarEmpleadosActionPerformed(evt);
+            }
+        });
 
         jBtnFiltrarEmpleado.setText("Buscar");
 
         jLabel15.setText("ID empleado");
+
+        jTFIdEmpleadoBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTFIdEmpleadoBuscarKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -510,6 +549,11 @@ public class JfraEmpleados extends javax.swing.JFrame {
                 "IdEmpleado", "Primer Nombre", "Segundo Nombre", "Primer Apellidol", "Segundo Apellido", "Direccion", "Telefono Celular", "Id Cargo", "Id Estado"
             }
         ));
+        jTblEmpleados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTblEmpleadosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTblEmpleados);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -614,6 +658,11 @@ public class JfraEmpleados extends javax.swing.JFrame {
         jBtnLimpiar.setText("Limpiar");
 
         jBtnEditar.setText("Editar");
+        jBtnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnEditarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -728,6 +777,42 @@ public class JfraEmpleados extends javax.swing.JFrame {
     private void jTFSegundoNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFSegundoNombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTFSegundoNombreActionPerformed
+
+    private void jTFIdEmpleadoBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFIdEmpleadoBuscarKeyReleased
+        if (this.jTFIdEmpleadoBuscar.getText().equals("")) {
+            try {
+                poblarTablaEmpleados();
+            } catch (SQLException ex) {
+                Logger.getLogger(JFraConsultaMedica.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            try {
+            busquedaFiltrada(this.jTFIdEmpleadoBuscar.getText());
+        } catch (SQLException ex) {
+            Logger.getLogger(JFraConsultaMedica.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }
+    }//GEN-LAST:event_jTFIdEmpleadoBuscarKeyReleased
+
+    private void jBtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEditarActionPerformed
+      try {
+            editar();
+        } catch (SQLException ex) {
+            Logger.getLogger(JFraConsultaMedica.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jBtnEditarActionPerformed
+
+    private void jTblEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTblEmpleadosMouseClicked
+       this.filaSelecionada();
+    }//GEN-LAST:event_jTblEmpleadosMouseClicked
+
+    private void jBtnEliminarEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEliminarEmpleadosActionPerformed
+       try {
+            eliminar();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "ERROR" +   ex );
+        }
+    }//GEN-LAST:event_jBtnEliminarEmpleadosActionPerformed
 
     /**
      * @param args the command line arguments
