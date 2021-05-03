@@ -24,8 +24,6 @@ public class CDHistoriaClinica {
     private final Connection cn;
     PreparedStatement ps;
     ResultSet rs;
-    Statement st;
-
      
     public CDHistoriaClinica() throws SQLException {
         this.cn = Conexion.conectar();
@@ -33,17 +31,15 @@ public class CDHistoriaClinica {
     
     //Metodo para insertar una Historia Clinica
     public void insertarHistoriaClinica (CLHistoriaClinica cl) throws SQLException {
-    
          String sql = "{CALL sp_insertarHistoriaClinica(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
-        
         try{
             ps = cn.prepareCall(sql);
-            ps.setString(1, cl.getNumeroIdentidad());
+            ps.setString(1, cl.getNumeroIdentidadPaciente());
             ps.setString(2, cl.getFechaCreacion());
-            ps.setString(3,cl.getCardiobasculares());
+            ps.setString(3, cl.getCardiobasculares());
             ps.setString(4, cl.getPulmonares());
             ps.setString(5, cl.getDigestivo());
-            ps.setString(6, cl.getDiavetes());
+            ps.setString(6, cl.getDiabetes());
             ps.setString(7, cl.getRenales());
             ps.setString(8, cl.getQuirurgicos());
             ps.setString(9, cl.getAlergicos());
@@ -52,10 +48,12 @@ public class CDHistoriaClinica {
             ps.setString(12, cl.getObservaciones());  
             ps.setInt(13, cl.getIdUsuario());  
             ps.execute();
+            
+           
            
             
         }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "error: "+ e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al guardar los datos  "+ e.getMessage());
         
         }
     }
@@ -67,12 +65,12 @@ public class CDHistoriaClinica {
         
         try{
             ps = cn.prepareCall(sql);
-            ps.setString(1, cl.getNumeroIdentidad());
+            ps.setString(1, cl.getNumeroIdentidadPaciente());
             ps.setString(2, cl.getFechaCreacion());
-            ps.setString(3,cl.getCardiobasculares());
+            ps.setString(3, cl.getCardiobasculares());
             ps.setString(4, cl.getPulmonares());
             ps.setString(5, cl.getDigestivo());
-            ps.setString(6, cl.getDiavetes());
+            ps.setString(6, cl.getDiabetes());
             ps.setString(7, cl.getRenales());
             ps.setString(8, cl.getQuirurgicos());
             ps.setString(9, cl.getAlergicos());
@@ -97,7 +95,7 @@ public class CDHistoriaClinica {
         
         try {
             ps = cn.prepareCall(sql);
-            ps.setString(1, cl.getNumeroIdentidad());
+            ps.setString(1, cl.getNumeroIdentidadPaciente());
             ps.execute();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
@@ -109,24 +107,24 @@ public class CDHistoriaClinica {
         String sql = "{CALL sp_mostrarHistoriaClinica()}";
         List<CLHistoriaClinica> miLista = null;
         try{
-            st = cn.createStatement();
+            Statement st = cn.createStatement();
             rs = st.executeQuery(sql);
             miLista = new ArrayList<>();
             while(rs.next()) {
                 CLHistoriaClinica cl = new CLHistoriaClinica();
                 
-                cl.setNumeroIdentidad(rs.getString("numeroIdentidad"));
-                cl.setFechaCreacion(rs.getString("fechaCreacion"));
-                cl.setCardiobasculares(rs.getString("cardiobasculares"));
-                cl.setPulmonares(rs.getString("pulmonares"));
-                cl.setDigestivo(rs.getString("digestivo"));
-                cl.setDiavetes(rs.getString("diavetes"));
-                cl.setRenales(rs.getString("renales"));
-                cl.setQuirurgicos(rs.getString("quirurgicos"));
-                cl.setAlergicos(rs.getString("alergicos"));
-                cl.setTransfusiones(rs.getString("transfusiones"));
-                cl.setMedicamentos(rs.getString("medicamentos"));
-                cl.setObservaciones(rs.getString("Observaciones"));
+                cl.setNumeroIdentidadPaciente(rs.getString("numeroIdentidad"));
+                cl.setFechaCreacion(rs.getString("historiaClinicaFechaCreacion"));
+                cl.setCardiobasculares(rs.getString("historiaClinicaCardiobasculares"));
+                cl.setPulmonares(rs.getString("historiaClinicaPulmonares"));
+                cl.setDigestivo(rs.getString("historiaClinicaDigestivo"));
+                cl.setDiabetes(rs.getString("historiaClinicaDiabetes"));
+                cl.setRenales(rs.getString("historiaClinicaRenales"));
+                cl.setQuirurgicos(rs.getString("historiaClinicaQuirurgicos"));
+                cl.setAlergicos(rs.getString("historiaClinicaAlergicos"));
+                cl.setTransfusiones(rs.getString("historiaClinicaTransfusiones"));
+                cl.setMedicamentos(rs.getString("historiaClinicaMedicamentos"));
+                cl.setObservaciones(rs.getString("historiaClinicaObservaciones"));
                 cl.setIdUsuario(rs.getInt("idUsuario"));
                 miLista.add(cl);
             }

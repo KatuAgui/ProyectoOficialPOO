@@ -434,7 +434,12 @@ public class JFraPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnConsultaMedicaMouseClicked
 
     private void jBtnHistorialMedicoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBtnHistorialMedicoMouseClicked
-        JFraHistoriaClinica histo = new JFraHistoriaClinica();
+        JFraHistoriaClinica histo = null;
+        try {
+            histo = new JFraHistoriaClinica();
+        } catch (SQLException ex) {
+            Logger.getLogger(JFraPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
         histo.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jBtnHistorialMedicoMouseClicked

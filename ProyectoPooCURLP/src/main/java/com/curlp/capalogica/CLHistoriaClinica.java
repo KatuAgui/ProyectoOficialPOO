@@ -10,12 +10,12 @@ package com.curlp.capalogica;
  * @author Admi
  */
 public class CLHistoriaClinica {
-    private String numeroIdentidad;
+    private String numeroIdentidadPaciente;
     private String fechaCreacion;
     private String cardiobasculares;
     private String pulmonares;
     private String digestivo;
-    private String diavetes;
+    private String diabetes;
     private String renales;
     private String quirurgicos;
     private String alergicos;
@@ -24,14 +24,13 @@ public class CLHistoriaClinica {
     private String observaciones;
     private int idUsuario;
 
-    public String getNumeroIdentidad() {
-        return numeroIdentidad;
+    public String getNumeroIdentidadPaciente() {
+        return numeroIdentidadPaciente;
     }
 
-    public void setNumeroIdentidad(String numeroIdentidad) {
-        this.numeroIdentidad = numeroIdentidad;
+    public void setNumeroIdentidadPaciente(String numeroIdentidadPaciente) {
+        this.numeroIdentidadPaciente = numeroIdentidadPaciente;
     }
-
     public String getFechaCreacion() {
         return fechaCreacion;
     }
@@ -64,12 +63,12 @@ public class CLHistoriaClinica {
         this.digestivo = digestivo;
     }
 
-    public String getDiavetes() {
-        return diavetes;
+    public String getDiabetes() {
+        return diabetes;
     }
 
-    public void setDiavetes(String diavetes) {
-        this.diavetes = diavetes;
+    public void setDiabetes(String diabetes) {
+        this.diabetes = diabetes;
     }
 
     public String getRenales() {
@@ -127,9 +126,7 @@ public class CLHistoriaClinica {
     public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
     }
-    
-    
-    
-            
-    
+
+
+   
 }
