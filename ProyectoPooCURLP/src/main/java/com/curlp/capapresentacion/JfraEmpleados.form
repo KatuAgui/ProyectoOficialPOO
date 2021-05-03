@@ -57,8 +57,8 @@
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="jPanel8" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jPanel3" min="-2" pref="307" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jPanel3" min="-2" pref="319" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
                   </Group>
@@ -215,22 +215,13 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTFPrimerNombre">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Cindy"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTFSegundoNombre">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Consuelo"/>
-          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTFSegundoNombreActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTFPrimerApellido">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Caballero"/>
-          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTFPrimerApellidoActionPerformed"/>
           </Events>
@@ -241,9 +232,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTFSegundoApellido">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Baca"/>
-          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTFSegundoApellidoActionPerformed"/>
           </Events>
@@ -254,9 +242,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTFDireccion">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Barrio Santa Lucia"/>
-          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTFDireccionActionPerformed"/>
           </Events>
@@ -267,9 +252,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTFTelefonoCelular">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="9988-4581"/>
-          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTFTelefonoCelularActionPerformed"/>
           </Events>
@@ -290,6 +272,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTFIdEmpleado">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTFIdEmpleadoActionPerformed"/>
           </Events>
@@ -321,17 +306,15 @@
                       <Group type="102" attributes="0">
                           <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jTFIdentidad" min="-2" pref="133" max="-2" attributes="0"/>
+                          <Component id="jTFIdEmpleadoBuscar" min="-2" pref="133" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
-                          <Component id="jBtnMostrarEmpleados" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jBtnFiltrarEmpleado" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jBtnEliminarEmpleados" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="104" max="32767" attributes="0"/>
+                  <EmptySpace pref="186" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -341,12 +324,11 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel15" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTFIdentidad" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jTFIdEmpleadoBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jBtnFiltrarEmpleado" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jBtnMostrarEmpleados" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jBtnEliminarEmpleados" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="0" pref="19" max="32767" attributes="0"/>
@@ -367,18 +349,10 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel15">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Numero de identidad "/>
+            <Property name="text" type="java.lang.String" value="ID empleado"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTFIdentidad">
-        </Component>
-        <Component class="javax.swing.JButton" name="jBtnMostrarEmpleados">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Mostrar empleados"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnMostrarEmpleadosActionPerformed"/>
-          </Events>
+        <Component class="javax.swing.JTextField" name="jTFIdEmpleadoBuscar">
         </Component>
       </SubComponents>
     </Container>
@@ -389,7 +363,7 @@
         </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="Lista Pacientes"/>
+            <TitledBorder title="Lista Empleados"/>
           </Border>
         </Property>
       </Properties>
@@ -426,15 +400,15 @@
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="9" rowCount="0">
-                    <Column editable="true" title="ID Empleados" type="java.lang.Object"/>
+                    <Column editable="true" title="IdEmpleado" type="java.lang.Object"/>
                     <Column editable="true" title="Primer Nombre" type="java.lang.Object"/>
                     <Column editable="true" title="Segundo Nombre" type="java.lang.Object"/>
-                    <Column editable="true" title="Primer Apellido" type="java.lang.Object"/>
+                    <Column editable="true" title="Primer Apellidol" type="java.lang.Object"/>
                     <Column editable="true" title="Segundo Apellido" type="java.lang.Object"/>
                     <Column editable="true" title="Direccion" type="java.lang.Object"/>
                     <Column editable="true" title="Telefono Celular" type="java.lang.Object"/>
-                    <Column editable="true" title="Cargo" type="java.lang.Object"/>
-                    <Column editable="true" title="Estado" type="java.lang.Object"/>
+                    <Column editable="true" title="Id Cargo" type="java.lang.Object"/>
+                    <Column editable="true" title="Id Estado" type="java.lang.Object"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">

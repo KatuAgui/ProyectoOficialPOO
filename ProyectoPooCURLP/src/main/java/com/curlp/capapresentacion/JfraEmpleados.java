@@ -30,8 +30,11 @@ public class JfraEmpleados extends javax.swing.JFrame {
     /**
      * Creates new form JfraEmpleados
      */
-    public JfraEmpleados() {
+    public JfraEmpleados() throws SQLException{
         initComponents();
+        poblarTablaEmpleados();
+        encontrarCorrelativo();
+        this.setLocationRelativeTo(null);        ;
     }
     
      private void limpiarTabla () { 
@@ -43,7 +46,7 @@ public class JfraEmpleados extends javax.swing.JFrame {
     }
     
     private void limpiarControles(){
-        jTFIdentidad.setText(null);
+        jTFIdEmpleadoBuscar.setText(null);
     }
     private void limpiarCamposRellenar(){
         this.jTFPrimerNombre.setText(null);
@@ -85,7 +88,7 @@ public class JfraEmpleados extends javax.swing.JFrame {
         DefaultTableModel temp = (DefaultTableModel) this.jTblEmpleados.getModel();
         
         myList.stream().map((CLEmpleado cd)-> {
-            Object[] fila = new Object[7];
+            Object[] fila = new Object[9];
             fila[0] = cd.getIdEmpleado();
             fila[1] = cd.getPrimerNombre();
             fila[2] = cd.getSegundoNombre();
@@ -95,7 +98,6 @@ public class JfraEmpleados extends javax.swing.JFrame {
             fila[6] = cd.getTelefonoCelular();
             fila[7] = cd.getIdCargo();
             fila[8] = cd.getIdEstado();
-           
             return fila;
         }).forEachOrdered(temp::addRow);
     }
@@ -138,6 +140,8 @@ public class JfraEmpleados extends javax.swing.JFrame {
                 cl.setSegundoNombre(this.jTFSegundoNombre.getText().trim());
                 cl.setPrimerApellido(this.jTFPrimerApellido.getText().trim());
                 cl.setSegundoApellido(this.jTFSegundoApellido.getText().trim());
+                cl.setDireccion(this.jTFDireccion.getText().trim());
+                cl.setTelefonoCelular(this.jTFTelefonoCelular.getText().trim());
                 cl.setIdCargo(Integer.valueOf(this.jTFIdCargo.getText().trim()));
                 cl.setIdEstado(Integer.valueOf(this.jTFIdEstado.getText().trim()));
                 
@@ -203,6 +207,14 @@ public class JfraEmpleados extends javax.swing.JFrame {
             }
         }
     }
+    
+    private void encontrarCorrelativo() throws SQLException{
+        CDEmpleado cdc = new CDEmpleado();
+        CLEmpleado cl = new CLEmpleado();        
+        cl.setIdEmpleado(cdc.autoIncrementarEmpleado());
+        this.jTFIdEmpleado.setText(String.valueOf(cl.getIdEmpleado()));
+        
+    }
 
     public JfraEmpleados(JButton Regresar1, JButton jBtnEditar, JButton jBtnEliminarEmpleados, JButton jBtnFiltrarEmpleado, JButton jBtnIngresarEmpleado, JButton jBtnLimpiar, JButton jBtnMostrarEmpleados, JLabel jLabel1, JLabel jLabel11, JLabel jLabel12, JLabel jLabel13, JLabel jLabel14, JLabel jLabel15, JLabel jLabel3, JLabel jLabel4, JLabel jLabel5, JLabel jLabel6, JLabel jLabel7, JLabel jLabel8, JLabel jLabel9, JLabel jLbCerrar, JPanel jPanel1, JPanel jPanel2, JPanel jPanel3, JPanel jPanel4, JPanel jPanel8, JScrollPane jScrollPane1, JTextField jTFDireccion, JTextField jTFIdCargo, JTextField jTFIdEmpleado, JTextField jTFIdEstado, JTextField jTFIdentidad, JTextField jTFPrimerApellido, JTextField jTFPrimerNombre, JTextField jTFSegundoApellido, JTextField jTFSegundoNombre, JTextField jTFTelefonoCelular, JTable jTblEmpleados) {
         this.Regresar1 = Regresar1;
@@ -211,7 +223,6 @@ public class JfraEmpleados extends javax.swing.JFrame {
         this.jBtnFiltrarEmpleado = jBtnFiltrarEmpleado;
         this.jBtnIngresarEmpleado = jBtnIngresarEmpleado;
         this.jBtnLimpiar = jBtnLimpiar;
-        this.jBtnMostrarEmpleados = jBtnMostrarEmpleados;
         this.jLabel1 = jLabel1;
         this.jLabel11 = jLabel11;
         this.jLabel12 = jLabel12;
@@ -236,7 +247,7 @@ public class JfraEmpleados extends javax.swing.JFrame {
         this.jTFIdCargo = jTFIdCargo;
         this.jTFIdEmpleado = jTFIdEmpleado;
         this.jTFIdEstado = jTFIdEstado;
-        this.jTFIdentidad = jTFIdentidad;
+        this.jTFIdEmpleadoBuscar = jTFIdentidad;
         this.jTFPrimerApellido = jTFPrimerApellido;
         this.jTFPrimerNombre = jTFPrimerNombre;
         this.jTFSegundoApellido = jTFSegundoApellido;
@@ -281,8 +292,7 @@ public class JfraEmpleados extends javax.swing.JFrame {
         jBtnEliminarEmpleados = new javax.swing.JButton();
         jBtnFiltrarEmpleado = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
-        jTFIdentidad = new javax.swing.JTextField();
-        jBtnMostrarEmpleados = new javax.swing.JButton();
+        jTFIdEmpleadoBuscar = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTblEmpleados = new javax.swing.JTable();
@@ -311,16 +321,12 @@ public class JfraEmpleados extends javax.swing.JFrame {
 
         jLabel5.setText("Primer Apellido");
 
-        jTFPrimerNombre.setText("Cindy");
-
-        jTFSegundoNombre.setText("Consuelo");
         jTFSegundoNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTFSegundoNombreActionPerformed(evt);
             }
         });
 
-        jTFPrimerApellido.setText("Caballero");
         jTFPrimerApellido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTFPrimerApellidoActionPerformed(evt);
@@ -329,7 +335,6 @@ public class JfraEmpleados extends javax.swing.JFrame {
 
         jLabel6.setText("Segundo Apellido");
 
-        jTFSegundoApellido.setText("Baca");
         jTFSegundoApellido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTFSegundoApellidoActionPerformed(evt);
@@ -338,7 +343,6 @@ public class JfraEmpleados extends javax.swing.JFrame {
 
         jLabel9.setText("Telefono Celular");
 
-        jTFDireccion.setText("Barrio Santa Lucia");
         jTFDireccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTFDireccionActionPerformed(evt);
@@ -347,7 +351,6 @@ public class JfraEmpleados extends javax.swing.JFrame {
 
         jLabel12.setText("Direccion");
 
-        jTFTelefonoCelular.setText("9988-4581");
         jTFTelefonoCelular.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTFTelefonoCelularActionPerformed(evt);
@@ -360,6 +363,7 @@ public class JfraEmpleados extends javax.swing.JFrame {
 
         jLabel8.setText("ID empleado");
 
+        jTFIdEmpleado.setEditable(false);
         jTFIdEmpleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTFIdEmpleadoActionPerformed(evt);
@@ -462,14 +466,7 @@ public class JfraEmpleados extends javax.swing.JFrame {
 
         jBtnFiltrarEmpleado.setText("Buscar");
 
-        jLabel15.setText("Numero de identidad ");
-
-        jBtnMostrarEmpleados.setText("Mostrar empleados");
-        jBtnMostrarEmpleados.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtnMostrarEmpleadosActionPerformed(evt);
-            }
-        });
+        jLabel15.setText("ID empleado");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -481,14 +478,12 @@ public class JfraEmpleados extends javax.swing.JFrame {
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addComponent(jLabel15)
                         .addGap(18, 18, 18)
-                        .addComponent(jTFIdentidad, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTFIdEmpleadoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(jBtnMostrarEmpleados)
-                        .addGap(18, 18, 18)
                         .addComponent(jBtnFiltrarEmpleado)
                         .addGap(18, 18, 18)
                         .addComponent(jBtnEliminarEmpleados)))
-                .addContainerGap(104, Short.MAX_VALUE))
+                .addContainerGap(186, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -496,24 +491,23 @@ public class JfraEmpleados extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
-                    .addComponent(jTFIdentidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTFIdEmpleadoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBtnFiltrarEmpleado)
-                    .addComponent(jBtnMostrarEmpleados)
                     .addComponent(jBtnEliminarEmpleados))
                 .addGap(0, 19, Short.MAX_VALUE))
         );
 
         jPanel1.setBackground(new java.awt.Color(79, 204, 146));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Lista Pacientes"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Lista Empleados"));
 
         jTblEmpleados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID Empleados", "Primer Nombre", "Segundo Nombre", "Primer Apellido", "Segundo Apellido", "Direccion", "Telefono Celular", "Cargo", "Estado"
+                "IdEmpleado", "Primer Nombre", "Segundo Nombre", "Primer Apellidol", "Segundo Apellido", "Direccion", "Telefono Celular", "Id Cargo", "Id Estado"
             }
         ));
         jScrollPane1.setViewportView(jTblEmpleados);
@@ -673,8 +667,8 @@ public class JfraEmpleados extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(65, 65, 65))))
         );
@@ -693,10 +687,6 @@ public class JfraEmpleados extends javax.swing.JFrame {
     private void jLabel14MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MousePressed
         this.dispose();
     }//GEN-LAST:event_jLabel14MousePressed
-
-    private void jBtnMostrarEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnMostrarEmpleadosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jBtnMostrarEmpleadosActionPerformed
 
     private void Regresar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Regresar1MouseClicked
         
@@ -785,7 +775,6 @@ public class JfraEmpleados extends javax.swing.JFrame {
     private javax.swing.JButton jBtnFiltrarEmpleado;
     private javax.swing.JButton jBtnIngresarEmpleado;
     private javax.swing.JButton jBtnLimpiar;
-    private javax.swing.JButton jBtnMostrarEmpleados;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -809,8 +798,8 @@ public class JfraEmpleados extends javax.swing.JFrame {
     private javax.swing.JTextField jTFDireccion;
     private javax.swing.JTextField jTFIdCargo;
     private javax.swing.JTextField jTFIdEmpleado;
+    private javax.swing.JTextField jTFIdEmpleadoBuscar;
     private javax.swing.JTextField jTFIdEstado;
-    private javax.swing.JTextField jTFIdentidad;
     private javax.swing.JTextField jTFPrimerApellido;
     private javax.swing.JTextField jTFPrimerNombre;
     private javax.swing.JTextField jTFSegundoApellido;
