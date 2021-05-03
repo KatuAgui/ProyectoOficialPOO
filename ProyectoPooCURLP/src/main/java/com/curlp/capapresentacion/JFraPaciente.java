@@ -8,6 +8,7 @@ package com.curlp.capapresentacion;
 import com.curlp.capadatos.CDPaciente;
 import com.curlp.capalogica.CLPaciente;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -87,7 +88,8 @@ public class JFraPaciente extends javax.swing.JFrame {
         this.jTFPrimerapellido.setText("");
         this.jTFSegundoapellido.setText("");
         this.jTFAntecedentes.setText("");
-        this.jTFFechanacimiento.setText("");
+        this.jDCFechaNacimiento.setDateFormatString("");
+        //this.jTFFechanacimiento.setText("");
         this.jTFTiposangre.setText("");
         this.jTFDireccion.setText("");
         this.jTFTelefono.setText("");
@@ -125,7 +127,9 @@ public class JFraPaciente extends javax.swing.JFrame {
             cl.setPrimerApellido(this.jTFPrimerapellido.getText().trim());
             cl.setSegundoApellido(this.jTFSegundoapellido.getText().trim());
             cl.setAntecedentesFamiliares(this.jTFAntecedentes.getText().trim());
-            cl.setFechaNacimiento(this.jTFFechanacimiento.getText().trim());
+            java.util.Date fecha = jDCFechaNacimiento.getDate();
+            SimpleDateFormat oDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            cl.setFechaNacimiento(oDateFormat.format(fecha));
             cl.setTipoSangre(this.jTFTiposangre.getText().trim());
             cl.setDireccion(this.jTFDireccion.getText().trim());
             cl.setTelefonoCelular(this.jTFTelefono.getText().trim());
@@ -174,7 +178,9 @@ public class JFraPaciente extends javax.swing.JFrame {
                 cl.setPrimerApellido(this.jTFPrimerapellido.getText().trim());
                 cl.setSegundoApellido(this.jTFSegundoapellido.getText().trim());
                 cl.setAntecedentesFamiliares(this.jTFAntecedentes.getText().trim());
-                cl.setFechaNacimiento(this.jTFFechanacimiento.getText().trim());
+                java.util.Date fecha = jDCFechaNacimiento.getDate();
+                SimpleDateFormat oDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                cl.setFechaNacimiento(oDateFormat.format(fecha));
                 cl.setTipoSangre(this.jTFTiposangre.getText().trim());
                 cl.setDireccion(this.jTFDireccion.getText().trim());
                 cl.setTelefonoCelular(this.jTFTelefono.getText().trim());
@@ -206,7 +212,7 @@ public class JFraPaciente extends javax.swing.JFrame {
             this.jTFPrimerapellido.setText(String.valueOf(this.jTblPaciente.getValueAt(this.jTblPaciente.getSelectedRow(),3)));
             this.jTFSegundoapellido.setText(String.valueOf(this.jTblPaciente.getValueAt(this.jTblPaciente.getSelectedRow(),4)));
             this.jTFAntecedentes.setText(String.valueOf(this.jTblPaciente.getValueAt(this.jTblPaciente.getSelectedRow(),5)));
-            this.jTFFechanacimiento.setText(String.valueOf(this.jTblPaciente.getValueAt(this.jTblPaciente.getSelectedRow(),6)));
+            this.jDCFechaNacimiento.setDateFormatString(String.valueOf(this.jTblPaciente.getValueAt(this.jTblPaciente.getSelectedRow(),6)));
             this.jTFTiposangre.setText(String.valueOf(this.jTblPaciente.getValueAt(this.jTblPaciente.getSelectedRow(),7)));
             this.jTFDireccion.setText(String.valueOf(this.jTblPaciente.getValueAt(this.jTblPaciente.getSelectedRow(),8)));
             this.jTFTelefono.setText(String.valueOf(this.jTblPaciente.getValueAt(this.jTblPaciente.getSelectedRow(),9)));
@@ -299,7 +305,6 @@ public class JFraPaciente extends javax.swing.JFrame {
         jTFPrimerapellido = new javax.swing.JTextField();
         jTFSegundoapellido = new javax.swing.JTextField();
         jTFAntecedentes = new javax.swing.JTextField();
-        jTFFechanacimiento = new javax.swing.JTextField();
         jTFTiposangre = new javax.swing.JTextField();
         jTFDireccion = new javax.swing.JTextField();
         jTFTelefono = new javax.swing.JTextField();
@@ -309,6 +314,7 @@ public class JFraPaciente extends javax.swing.JFrame {
         jTFEmail = new javax.swing.JTextField();
         jTFIdsexo = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
+        jDCFechaNacimiento = new com.toedter.calendar.JDateChooser();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTblPaciente = new javax.swing.JTable();
@@ -408,6 +414,8 @@ public class JFraPaciente extends javax.swing.JFrame {
         jLabel18.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel18.setText("DATOS DE PACIENTES");
 
+        jDCFechaNacimiento.setDateFormatString("yyy-MM-dd");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -435,10 +443,6 @@ public class JFraPaciente extends javax.swing.JFrame {
                         .addGap(35, 35, 35)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addGap(49, 49, 49)
-                                .addComponent(jTFFechanacimiento))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jTFAntecedentes, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -446,12 +450,14 @@ public class JFraPaciente extends javax.swing.JFrame {
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel11)
                                     .addComponent(jLabel10)
-                                    .addComponent(jLabel9))
+                                    .addComponent(jLabel9)
+                                    .addComponent(jLabel8))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTFTiposangre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTFTelefono, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTFDireccion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jTFTiposangre, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTFTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTFDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jDCFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(64, 64, 64)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -505,29 +511,15 @@ public class JFraPaciente extends javax.swing.JFrame {
                                     .addComponent(jLabel5)
                                     .addComponent(jTFPrimerapellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGap(20, 20, 20)
-                                        .addComponent(jLabel9)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGap(19, 19, 19)
-                                        .addComponent(jTFTiposangre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jTFTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGap(26, 26, 26)
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(jLabel6)
-                                            .addComponent(jTFSegundoapellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(jTFDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel10))))))
-                        .addGap(5, 5, 5))
+                                .addGap(20, 20, 20)
+                                .addComponent(jLabel9)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(48, 48, 48)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jTFSegundoapellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(8, 8, 8))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(25, 25, 25)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -558,8 +550,16 @@ public class JFraPaciente extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel8)
-                                    .addComponent(jTFFechanacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                    .addComponent(jDCFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTFTiposangre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTFTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jTFDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel10))))
+                        .addContainerGap(36, Short.MAX_VALUE))))
         );
 
         jPanel3.setBackground(new java.awt.Color(79, 198, 203));
@@ -663,9 +663,6 @@ public class JFraPaciente extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(351, 351, 351)
-                        .addComponent(jLabel17))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -677,17 +674,20 @@ public class JFraPaciente extends javax.swing.JFrame {
                                 .addComponent(BtnEliminar)
                                 .addGap(246, 246, 246)
                                 .addComponent(BtnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1173, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1173, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(346, 346, 346)
+                        .addComponent(jLabel17)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
+                .addGap(19, 19, 19)
                 .addComponent(jLabel17)
-                .addGap(17, 17, 17)
+                .addGap(27, 27, 27)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BtnEditar)
                     .addComponent(BtnGuardar)
@@ -818,6 +818,7 @@ public class JFraPaciente extends javax.swing.JFrame {
     private javax.swing.JButton BtnGuardar;
     private javax.swing.JButton BtnLimpiar;
     private javax.swing.JButton Regresar1;
+    private com.toedter.calendar.JDateChooser jDCFechaNacimiento;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -846,7 +847,6 @@ public class JFraPaciente extends javax.swing.JFrame {
     private javax.swing.JTextField jTFDireccion;
     private javax.swing.JTextField jTFEmail;
     private javax.swing.JTextField jTFEstatura;
-    private javax.swing.JTextField jTFFechanacimiento;
     private javax.swing.JTextField jTFIdsexo;
     private javax.swing.JTextField jTFNumeroidentidad;
     private javax.swing.JTextField jTFPeso;
