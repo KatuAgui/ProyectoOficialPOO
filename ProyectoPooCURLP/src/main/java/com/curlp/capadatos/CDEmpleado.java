@@ -66,15 +66,14 @@ public class CDEmpleado {
             ps.setInt(8, cl.getIdCargo());
             ps.setInt(9, cl.getIdEstado());
             ps.execute();
-           
-            
+                       
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null, "error: "+ e.getMessage());
         
         }
     
     }
-    // Metodo para eliminar cita medica
+    // Metodo para eliminar cita un empleado
     public void eliminarEmpleado(CLEmpleado cl) throws SQLException{
         String sql = "{CALL sp_eliminarEmpleado(?)}";
         
@@ -82,13 +81,12 @@ public class CDEmpleado {
             ps = cn.prepareCall(sql);
             ps.setInt(1, cl.getIdEmpleado());
             ps.execute();
-           
-            
+                       
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null, "error: "+ e.getMessage());
         
         }
-    
+   
     }
     // Metodo para autoincrementar empleado ID
     public int autoIncrementarEmpleado() throws SQLException{

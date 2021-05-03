@@ -5,9 +5,8 @@
  */
 package com.curlp.capapresentacion;
 
-import com.curlp.capadatos.CDConsultaMedica;
+
 import com.curlp.capadatos.CDEmpleado;
-import com.curlp.capalogica.CLConsultaMedica;
 import com.curlp.capalogica.CLEmpleado;
 import java.sql.SQLException;
 import java.util.List;
@@ -51,12 +50,12 @@ public class JfraEmpleados extends javax.swing.JFrame {
         jTFIdEmpleadoBuscar.setText(null);
     }
     private void limpiarCamposRellenar(){
-        this.jTFPrimerNombre.setText(null);
-        this.jTFSegundoNombre.setText(null);
-        this.jTFPrimerApellido.setText(null);
-        this.jTFSegundoApellido.setText(null);
-        this.jTFDireccion.setText(null);
-        this.jTFTelefonoCelular.setText(null);
+        this.jTFPrimerNombre.setText("");
+        this.jTFSegundoNombre.setText("");
+        this.jTFPrimerApellido.setText("");
+        this.jTFSegundoApellido.setText("");
+        this.jTFDireccion.setText("");
+        this.jTFTelefonoCelular.setText("");
         
     }
     
@@ -200,25 +199,30 @@ public class JfraEmpleados extends javax.swing.JFrame {
         }
     }
     
-    private void eliminarEmpleado() throws SQLException{
-        CDEmpleado cdcm = new CDEmpleado();
-        CLEmpleado cl = new CLEmpleado();
-        try {
-            cl.setIdEmpleado(Integer.parseInt(this.jTFIdEmpleado.toString()));
-            cdcm.eliminarEmpleado(cl);           
+    private void eliminarEmpleado(){
+
+    try {
+            CDEmpleado cdc = new CDEmpleado();
+            CLEmpleado cl = new CLEmpleado();
+            cl.setIdEmpleado(Integer.parseInt(this.jTFIdEmpleado.getText().trim()));
+            cdc.eliminarEmpleado(cl);
+            
             JOptionPane.showMessageDialog(null, "Eliminado exitosamente ", "Control",
                     JOptionPane.INFORMATION_MESSAGE);
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "error al eliminar registro" + ex);
+            this.jTFPrimerNombre.requestFocus();
 
         }
+
     }
+    
+    
     
     private void eliminar () throws SQLException{
         int resp = JOptionPane.showConfirmDialog(null, "Seguro que quiere eliminar","control",
-                                                 JOptionPane.YES_NO_OPTION);
-       
+                                                 JOptionPane.YES_NO_OPTION);       
         if (resp == JOptionPane.YES_OPTION) {
             try {
                 eliminarEmpleado();
