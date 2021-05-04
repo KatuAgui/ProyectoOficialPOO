@@ -26,7 +26,7 @@ public class CDUsuario {
     }
 
      //Metodo para insertar empleado en la tabla
-    public void insertarEmpleado(CLUsuario cl) throws SQLException{
+    public void insertarUsuario(CLUsuario cl) throws SQLException{
         String sql = "{CALL sp_insertarUsuario(?,?,?,?,?,?)}";
         
          try{
@@ -40,28 +40,27 @@ public class CDUsuario {
             ps.execute();
             
         }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "error: "+ e.getMessage());
+            JOptionPane.showMessageDialog(null, "erro al insertar usuario "+ e.getMessage());
         
         }      
     }
     
     //Metodo para actualizar empleado en la tabla
-    public void actualizarEmpleado(CLUsuario cl) {
-        String sql = "{CALL sp_actualizarUsuario(?,?,?,?,?,?)}";
+     public void actualizarUsuario(CLUsuario cl) {
+        String sql = "{CALL sp_actualizarUsuario(?,?,?,?,?,?,?)}";
         try{
             ps = cn.prepareCall(sql);
-            ps.setString(1, cl.getNombreUsuario());
-            ps.setString(2, cl.getPassword());
-            ps.setString(3, cl.getFechaCreacion());
-            ps.setString(4, cl.getFechaBaja());
-            ps.setInt(5, cl.getIdEstado());
-            ps.setInt(6, cl.getIdEmpleado());
+            ps.setInt(1, cl.getIdUsuario());
+            ps.setString(2, cl.getNombreUsuario());
+            ps.setString(3, cl.getPassword());
+            ps.setString(4, cl.getFechaCreacion());
+            ps.setString(5, cl.getFechaBaja());
+            ps.setInt(6, cl.getIdEstado());
+            ps.setInt(7, cl.getIdEmpleado());
             ps.execute();
-            
-           
-            
+                              
         }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "error: "+ e.getMessage());
+            JOptionPane.showMessageDialog(null, "error al actualizar usuario: "+ e.getMessage());
         
         }
     
@@ -69,7 +68,7 @@ public class CDUsuario {
     
     // Metodo para eliminar un usuario
     public void eliminarUsuario(CLUsuario cl) throws SQLException{
-        String sql = "{CALL sp_eliminarEmpleado(?)}";
+        String sql = "{CALL sp_eliminarUsuario(?)}";
         
         try{
             ps = cn.prepareCall(sql);
@@ -104,8 +103,8 @@ public class CDUsuario {
         return idUsuario;
     }
     //Metodo para poblar la tabla empleados
-    public List<CLUsuario> obtenerListaEmpleados() throws SQLException{
-        String sql = "{CALL sp_mostrarEmpleados()}";
+    public List<CLUsuario> obtenerListaUsuarios() throws SQLException{
+        String sql = "{CALL sp_mostrarUsuarios()}";
         List<CLUsuario> miLista = null;
         try{
             st = cn.createStatement();
@@ -113,10 +112,11 @@ public class CDUsuario {
             miLista = new ArrayList<>();
             while(rs.next()) {
                 CLUsuario cl = new CLUsuario();
-                cl.setNombreUsuario(rs.getString("nombreUsuario"));
-                cl.setPassword(rs.getString("password"));
-                cl.setFechaCreacion(rs.getString("fechaCreacion"));
-                cl.setFechaBaja(rs.getString("fechaBaja"));
+                cl.setIdUsuario(rs.getInt("idUsuario"));
+                cl.setNombreUsuario(rs.getString("usuarioNombreUsuario"));
+                cl.setPassword(rs.getString("usuarioPassword"));
+                cl.setFechaCreacion(rs.getString("usuarioFechaCreacion"));
+                cl.setFechaBaja(rs.getString("usuarioFechaBaja"));
                 cl.setIdEstado(rs.getInt("idEstado"));
                 cl.setIdEmpleado(rs.getInt("idEmpleado"));
                 miLista.add(cl);
