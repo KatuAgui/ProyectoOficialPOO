@@ -8,7 +8,9 @@ package com.curlp.capapresentacion;
 import com.curlp.capadatos.CDPaciente;
 import com.curlp.capalogica.CLPaciente;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -88,7 +90,7 @@ public class JFraPaciente extends javax.swing.JFrame {
         this.jTFPrimerapellido.setText("");
         this.jTFSegundoapellido.setText("");
         this.jTFAntecedentes.setText("");
-        this.jDCFechaNacimiento.setDateFormatString("");
+        //this.jDCFechaNacimiento.setDateFormatString("");
         //this.jTFFechanacimiento.setText("");
         this.jTFTiposangre.setText("");
         this.jTFDireccion.setText("");
@@ -212,7 +214,13 @@ public class JFraPaciente extends javax.swing.JFrame {
             this.jTFPrimerapellido.setText(String.valueOf(this.jTblPaciente.getValueAt(this.jTblPaciente.getSelectedRow(),3)));
             this.jTFSegundoapellido.setText(String.valueOf(this.jTblPaciente.getValueAt(this.jTblPaciente.getSelectedRow(),4)));
             this.jTFAntecedentes.setText(String.valueOf(this.jTblPaciente.getValueAt(this.jTblPaciente.getSelectedRow(),5)));
-            this.jDCFechaNacimiento.setDateFormatString(String.valueOf(this.jTblPaciente.getValueAt(this.jTblPaciente.getSelectedRow(),6)));
+            Date oDateFormat;
+            try {
+                oDateFormat = new SimpleDateFormat("yyyy-MM-dd").parse((String)this.jTblPaciente.getValueAt(this.jTblPaciente.getSelectedRow(), 6));
+                this.jDCFechaNacimiento.setDate(oDateFormat);
+            } catch (ParseException ex) {
+                Logger.getLogger(JFraHistoriaClinica.class.getName()).log(Level.SEVERE, null, ex);
+            }
             this.jTFTiposangre.setText(String.valueOf(this.jTblPaciente.getValueAt(this.jTblPaciente.getSelectedRow(),7)));
             this.jTFDireccion.setText(String.valueOf(this.jTblPaciente.getValueAt(this.jTblPaciente.getSelectedRow(),8)));
             this.jTFTelefono.setText(String.valueOf(this.jTblPaciente.getValueAt(this.jTblPaciente.getSelectedRow(),9)));

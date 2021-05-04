@@ -9,7 +9,9 @@ import com.curlp.capadatos.CDCitaMedica;
 import com.curlp.capalogica.CLCitaMedica;
 import java.awt.Image;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -100,7 +102,7 @@ public class JFraCitaMedica extends javax.swing.JFrame {
         
         this.jTFIdCita.setText("");
         this.jTFObservaciones.setText("");
-        this.jDCFechaIngreso.setDateFormatString("");
+        //this.jDCFechaIngreso.setDateFormatString("");
         //this.jTFFecha.setText("");
         this.jTFHoraInicio.setText("");
         this.jTFHoraFinal.setText("");
@@ -246,7 +248,13 @@ public class JFraCitaMedica extends javax.swing.JFrame {
             this.jTFIdentidad.setText(String.valueOf(this.jTblCitaMedica.getValueAt(this.jTblCitaMedica.getSelectedRow(), 0)));
             this.jTFIdCita.setText(String.valueOf(this.jTblCitaMedica.getValueAt(this.jTblCitaMedica.getSelectedRow(), 2)));
             this.jTFObservaciones.setText(String.valueOf(this.jTblCitaMedica.getValueAt(this.jTblCitaMedica.getSelectedRow(), 3)));
-            this.jDCFechaIngreso.setDateFormatString(String.valueOf(this.jTblCitaMedica.getValueAt(this.jTblCitaMedica.getSelectedRow(), 4)));
+            Date oDateFormat;
+            try {
+                oDateFormat = new SimpleDateFormat("yyyy-MM-dd").parse((String)this.jTblCitaMedica.getValueAt(this.jTblCitaMedica.getSelectedRow(), 4));
+                this.jDCFechaIngreso.setDate(oDateFormat);
+            } catch (ParseException ex) {
+                Logger.getLogger(JFraHistoriaClinica.class.getName()).log(Level.SEVERE, null, ex);
+            }
             //this.jTFFecha.setText(String.valueOf(this.jTblCitaMedica.getValueAt(this.jTblCitaMedica.getSelectedRow(), 4)));
             this.jTFHoraInicio.setText(String.valueOf(this.jTblCitaMedica.getValueAt(this.jTblCitaMedica.getSelectedRow(), 5)));
             this.jTFHoraFinal.setText(String.valueOf(this.jTblCitaMedica.getValueAt(this.jTblCitaMedica.getSelectedRow(), 6)));       

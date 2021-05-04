@@ -9,6 +9,9 @@ import com.curlp.capadatos.CDConsultaMedica;
 import com.curlp.capalogica.CLConsultaMedica;
 import java.awt.HeadlessException;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -50,11 +53,11 @@ public class JFraConsultaMedica extends javax.swing.JFrame {
         jTFNumeroIdentidadBusquedaFiltrada.setText(null);
     }
     private void limpiarCamposRellenar(){
-        this.jTFFechaIngreso.setText(null);
-        this.jTFNumeroIdentidad.setText(null);
-        this.jTFObservaciones.setText(null);
-        this.jTFRecetasMedicas.setText(null);
-        this.jTFIngresadoPor.setText(null);
+        //this.jDCFechaIngreso.setDateFormatString("");
+        this.jTFNumeroIdentidad.setText("");
+        this.jTFObservaciones.setText("");
+        this.jTFRecetasMedicas.setText("");
+        this.jTFIngresadoPor.setText("");
     }
         
     private void poblarTablaConsultas () throws SQLException {
@@ -90,9 +93,9 @@ public class JFraConsultaMedica extends javax.swing.JFrame {
     }
     
     
-    private boolean validarTFFechaIngreso(){
+    private boolean validarDCFechaIngreso(){
         boolean estado;
-        estado = this.jTFFechaIngreso.getText().equals("");
+        estado =!this.jDCFechaIngreso.getDateFormatString().equals("");
         return estado;
     }
     
@@ -121,9 +124,9 @@ public class JFraConsultaMedica extends javax.swing.JFrame {
     }
     
     private void insertarConsultaMedica(){
-        if (validarTFFechaIngreso()) {
+        if (!validarDCFechaIngreso()) {
             JOptionPane.showMessageDialog(null, "Debe ingresar la fecha de ingreso","SIMEC",1);
-            this.jTFFechaIngreso.requestFocus();
+            this.jDCFechaIngreso.requestFocus();
         }else if (validarTFObservaciones()){
             JOptionPane.showMessageDialog(null, "Debe ingresar Observaciones","SIMEC",1);
             this.jTFObservaciones.requestFocus();
@@ -140,7 +143,10 @@ public class JFraConsultaMedica extends javax.swing.JFrame {
             try {
                 CDConsultaMedica cdcm = new CDConsultaMedica();
                 CLConsultaMedica cl = new CLConsultaMedica();
-                cl.setFechaIngreso(this.jTFFechaIngreso.getText().trim());
+                java.util.Date fecha = jDCFechaIngreso.getDate();
+                SimpleDateFormat oDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                cl.setFechaIngreso(oDateFormat.format(fecha));
+                //cl.setFechaIngreso(this.jTFFechaIngreso.getText().trim());
                 cl.setObservaciones(this.jTFObservaciones.getText().trim());
                 cl.setRecetasMedicas(this.jTFRecetasMedicas.getText().trim());
                 cl.setNumeroIdentidad(this.jTFNumeroIdentidad.getText().trim());
@@ -188,7 +194,9 @@ public class JFraConsultaMedica extends javax.swing.JFrame {
         CLConsultaMedica cl = new CLConsultaMedica();
         
         try {
-                cl.setFechaIngreso(this.jTFFechaIngreso.getText().trim());
+                java.util.Date fecha = jDCFechaIngreso.getDate();
+                SimpleDateFormat oDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                cl.setFechaIngreso(oDateFormat.format(fecha));
                 cl.setObservaciones(this.jTFObservaciones.getText().trim());
                 cl.setRecetasMedicas(this.jTFRecetasMedicas.getText().trim());
                 cl.setNumeroIdentidad(this.jTFNumeroIdentidad.getText().trim());
@@ -235,7 +243,14 @@ public class JFraConsultaMedica extends javax.swing.JFrame {
     
     private void filaSelecionada (){
         if (this.jTblConsultasMedicas.getSelectedRow() != -1){
-            this.jTFFechaIngreso.setText(String.valueOf(this.jTblConsultasMedicas.getValueAt(this.jTblConsultasMedicas.getSelectedRow(), 11)));
+            Date oDateFormat;
+            try {
+                oDateFormat = new SimpleDateFormat("yyyy-MM-dd").parse((String)this.jTblConsultasMedicas.getValueAt(this.jTblConsultasMedicas.getSelectedRow(), 11));
+                this.jDCFechaIngreso.setDate(oDateFormat);
+            } catch (ParseException ex) {
+                Logger.getLogger(JFraConsultaMedica.class.getName()).log(Level.SEVERE, null, ex);
+            }
+//this.jTFFechaIngreso.setText(String.valueOf(this.jTblConsultasMedicas.getValueAt(this.jTblConsultasMedicas.getSelectedRow(), 11)));
             this.jTFObservaciones.setText(String.valueOf(this.jTblConsultasMedicas.getValueAt(this.jTblConsultasMedicas.getSelectedRow(), 12)));
             this.jTFRecetasMedicas.setText(String.valueOf(this.jTblConsultasMedicas.getValueAt(this.jTblConsultasMedicas.getSelectedRow(), 13)));
             this.jTFNumeroIdentidad.setText(String.valueOf(this.jTblConsultasMedicas.getValueAt(this.jTblConsultasMedicas.getSelectedRow(), 0)));
@@ -308,6 +323,7 @@ public class JFraConsultaMedica extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jBtnLimpiarCampos = new javax.swing.JButton();
         jTFIngresadoPor = new javax.swing.JTextField();
+        jDCFechaIngreso = new com.toedter.calendar.JDateChooser();
         jPanel3 = new javax.swing.JPanel();
         jBtnAgregarNuevaConsulta = new javax.swing.JButton();
         jBtnEditarConsulta = new javax.swing.JButton();
@@ -420,6 +436,8 @@ public class JFraConsultaMedica extends javax.swing.JFrame {
             }
         });
 
+        jDCFechaIngreso.setDateFormatString("yyyy-MM-dd");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -429,10 +447,10 @@ public class JFraConsultaMedica extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTFFechaIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel3)
-                            .addComponent(jTFIngresadoPor, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTFIngresadoPor, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                            .addComponent(jDCFechaIngreso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(30, 30, 30)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
@@ -444,12 +462,17 @@ public class JFraConsultaMedica extends javax.swing.JFrame {
                                     .addComponent(jLabel4))
                                 .addGap(40, 40, 40)))
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTFRecetasMedicas, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))
-                        .addGap(24, 24, 24)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTFNumeroIdentidad, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTFRecetasMedicas, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel5))
+                                .addGap(24, 24, 24)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jTFNumeroIdentidad, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel6)))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(8, 8, 8)
+                                .addComponent(jTFFechaIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(42, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -462,17 +485,24 @@ public class JFraConsultaMedica extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTFFechaIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTFObservaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTFRecetasMedicas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTFNumeroIdentidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jBtnLimpiarCampos)
-                    .addComponent(jTFIngresadoPor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTFObservaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTFRecetasMedicas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTFNumeroIdentidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jDCFechaIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jBtnLimpiarCampos)
+                            .addComponent(jTFIngresadoPor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTFFechaIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
 
         jPanel3.setBackground(new java.awt.Color(79, 203, 146));
@@ -790,6 +820,7 @@ public class JFraConsultaMedica extends javax.swing.JFrame {
     private javax.swing.JButton jBtnEliminarConsulta;
     private javax.swing.JButton jBtnLimpiarCampos;
     private javax.swing.JButton jBtnLimpiarControles;
+    private com.toedter.calendar.JDateChooser jDCFechaIngreso;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
