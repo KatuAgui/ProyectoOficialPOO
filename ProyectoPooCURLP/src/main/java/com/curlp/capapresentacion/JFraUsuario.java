@@ -410,31 +410,19 @@ public class JFraUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_jTFIdEmpleadoActionPerformed
 
     private void jBtnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnIngresarActionPerformed
-        try {
-            guardar();
-        } catch (SQLException ex) {
-            Logger.getLogger(JFraConsultaMedica.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
     }//GEN-LAST:event_jBtnIngresarActionPerformed
 
     private void jBtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEditarActionPerformed
-        try {
-            editar();
-        } catch (SQLException ex) {
-            Logger.getLogger(JFraConsultaMedica.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       
     }//GEN-LAST:event_jBtnEditarActionPerformed
 
     private void jBtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEliminarActionPerformed
-        try {
-            eliminar();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "ERROR" +   ex );
-        }
+       
     }//GEN-LAST:event_jBtnEliminarActionPerformed
 
     private void jBtnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnLimpiarActionPerformed
-        this.limpiarCamposRellenar();
+      
     }//GEN-LAST:event_jBtnLimpiarActionPerformed
 
     /**
