@@ -124,7 +124,7 @@ private final Connection cn;
                 cl.setEstatura(rs.getDouble("pacienteEstatura"));
                 cl.setCiudadProcedencia(rs.getString("pacienteCiudadProcedencia"));
                 cl.setEmail(rs.getString("pacienteEmail"));
-                cl.setSexo(rs.getString("sexo"));
+                cl.setSexo(rs.getString("idSexo"));
                 miLista.add(cl);
             }
             
@@ -161,4 +161,44 @@ private final Connection cn;
     public String autoIncrementarCiudad() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    //Metodo para Mostrar tabla paciente por ID
+    public List<CLPaciente> mostrarTablaPacientPorIdentidad(String numeroIdentidad) throws SQLException{
+        String sql = "{CALL sp_mostrarPacientesX(?)}";
+        List<CLPaciente> miLista = null;
+        try{
+            ps = cn.prepareStatement(sql);
+            ps.setString(1, numeroIdentidad);
+            rs = ps.executeQuery();
+            miLista = new ArrayList<>();
+            while(rs.next()) {
+                CLPaciente cl = new CLPaciente();
+                cl.setNumeroIdentidad(rs.getString("numeroIdentidad"));
+                cl.setPrimerNombre(rs.getString("pacientePrimerNombre"));
+                cl.setSegundoNombre(rs.getString("pacienteSegundoNombre"));
+                cl.setPrimerApellido(rs.getString("pacientePrimerApellido"));
+                cl.setSegundoApellido(rs.getString("pacienteSegundoApellido"));
+                cl.setAntecedentesFamiliares(rs.getString("pacienteAntecedentesFamiliares"));
+                cl.setFechaNacimiento(rs.getString("pacienteFechaNacimiento"));
+                cl.setTipoSangre(rs.getString("pacienteTipoSangre"));
+                cl.setDireccion(rs.getString("pacienteDireccion"));
+                cl.setTelefonoCelular(rs.getString("pacienteTelefonoCelular"));
+                cl.setPeso(rs.getDouble("pacientePeso"));
+                cl.setEstatura(rs.getDouble("pacienteEstatura"));
+                cl.setCiudadProcedencia(rs.getString("pacienteCiudadProcedencia"));
+                cl.setEmail(rs.getString("pacienteEmail"));
+                cl.setSexo(rs.getString("idSexo"));
+                miLista.add(cl);
+            }
+            
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "error: "+ e.getMessage());
+        
+        }
+        return miLista;
+        
+    }
 }
+
+
+

@@ -268,6 +268,34 @@ public class JFraPaciente extends javax.swing.JFrame {
             }
         }
     }
+    
+    // Metodo para llenar tabla por identidad
+    private void llenarTablaPorIdentidad (String numeroIdentidad) throws SQLException{ 
+        limpiarTabla();
+        CDPaciente cdc = new CDPaciente();
+        List<CLPaciente> miLista = cdc.mostrarTablaPacientPorIdentidad(numeroIdentidad);
+        DefaultTableModel temp = (DefaultTableModel) this.jTblPaciente.getModel();
+        
+        miLista.stream().map((CLPaciente cl)->{
+            Object [] fila = new Object [15];
+            fila [0] = cl.getNumeroIdentidad();
+            fila [1] = cl.getPrimerNombre();
+            fila [2] = cl.getSegundoNombre();
+            fila [3] = cl.getPrimerApellido();
+            fila [4] = cl.getSegundoApellido();
+            fila [5] = cl.getAntecedentesFamiliares();
+            fila [6] = cl.getFechaNacimiento();
+            fila [7] = cl.getTipoSangre();
+            fila [8] = cl.getDireccion();
+            fila [9] = cl.getTelefonoCelular();
+            fila [10] = cl.getPeso();
+            fila [11] = cl.getEstatura();
+            fila [12] = cl.getCiudadProcedencia();
+            fila [13] = cl.getEmail();
+            fila [14] = cl.getIdSexo();
+            return fila;
+        }).forEachOrdered(temp::addRow);
+    }
 
     
     /**
@@ -325,8 +353,8 @@ public class JFraPaciente extends javax.swing.JFrame {
         BtnEliminar = new javax.swing.JButton();
         BtnEditar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        jTFIdentidadBuscar = new javax.swing.JTextField();
+        jBtnBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(204, 255, 204));
@@ -669,36 +697,41 @@ public class JFraPaciente extends javax.swing.JFrame {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BtnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BtnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BtnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(BtnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(79, 203, 146));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Buscar Por Identidad", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
-        jButton1.setBackground(new java.awt.Color(255, 255, 255));
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton1.setText("Buscar");
+        jBtnBuscar.setBackground(new java.awt.Color(255, 255, 255));
+        jBtnBuscar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jBtnBuscar.setText("Buscar");
+        jBtnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnBuscarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTextField1)
+            .addComponent(jTFIdentidadBuscar)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jBtnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTFIdentidadBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
+                .addComponent(jBtnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -753,9 +786,9 @@ public class JFraPaciente extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Regresar1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                .addComponent(Regresar1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43)
+                .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel19)
                 .addGap(21, 21, 21))
@@ -764,15 +797,14 @@ public class JFraPaciente extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(Regresar1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18))
+                    .addComponent(Regresar1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel19)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jLabel19))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel1)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -846,6 +878,27 @@ public class JFraPaciente extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_BtnGuardarActionPerformed
 
+    private void jBtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBuscarActionPerformed
+        String numIdentidad;
+        numIdentidad = this.jTFIdentidadBuscar.getText().trim();
+        
+        if(this.jTFIdentidadBuscar.getText().trim().equals("")){
+            this.jTFIdentidadBuscar.requestFocus();
+            try {
+                poblarTablaPaciente ();
+            } catch (SQLException ex) {
+                Logger.getLogger(JFraPaciente.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else {
+            try {
+                llenarTablaPorIdentidad(numIdentidad);
+                this.jTFIdentidadBuscar.setText("");
+            } catch (SQLException ex) {
+                Logger.getLogger(JFraPaciente.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jBtnBuscarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -892,7 +945,7 @@ public class JFraPaciente extends javax.swing.JFrame {
     private javax.swing.JButton BtnGuardar;
     private javax.swing.JButton BtnLimpiar;
     private javax.swing.JButton Regresar1;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jBtnBuscar;
     private com.toedter.calendar.JDateChooser jDCFechaNacimiento;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -924,6 +977,7 @@ public class JFraPaciente extends javax.swing.JFrame {
     private javax.swing.JTextField jTFDireccion;
     private javax.swing.JTextField jTFEmail;
     private javax.swing.JTextField jTFEstatura;
+    private javax.swing.JTextField jTFIdentidadBuscar;
     private javax.swing.JTextField jTFIdsexo;
     private javax.swing.JTextField jTFNumeroidentidad;
     private javax.swing.JTextField jTFPeso;
@@ -934,6 +988,5 @@ public class JFraPaciente extends javax.swing.JFrame {
     private javax.swing.JTextField jTFTelefono;
     private javax.swing.JTextField jTFTiposangre;
     private javax.swing.JTable jTblPaciente;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
