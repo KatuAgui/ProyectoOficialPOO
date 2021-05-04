@@ -124,7 +124,7 @@ private final Connection cn;
                 cl.setEstatura(rs.getDouble("pacienteEstatura"));
                 cl.setCiudadProcedencia(rs.getString("pacienteCiudadProcedencia"));
                 cl.setEmail(rs.getString("pacienteEmail"));
-                cl.setSexo(rs.getString("idSexo"));
+                cl.setSexo(rs.getString("sexo"));
                 miLista.add(cl);
             }
             
@@ -163,12 +163,12 @@ private final Connection cn;
     }
     
     //Metodo para Mostrar tabla paciente por ID
-    public List<CLPaciente> mostrarTablaPacientPorIdentidad(String numeroIdentidad) throws SQLException{
+    public List<CLPaciente> mostrarTablaPacientPorIdentidad(String nombre) throws SQLException{
         String sql = "{CALL sp_mostrarPacientesX(?)}";
         List<CLPaciente> miLista = null;
         try{
             ps = cn.prepareStatement(sql);
-            ps.setString(1, numeroIdentidad);
+            ps.setString(1, nombre);
             rs = ps.executeQuery();
             miLista = new ArrayList<>();
             while(rs.next()) {
@@ -187,7 +187,7 @@ private final Connection cn;
                 cl.setEstatura(rs.getDouble("pacienteEstatura"));
                 cl.setCiudadProcedencia(rs.getString("pacienteCiudadProcedencia"));
                 cl.setEmail(rs.getString("pacienteEmail"));
-                cl.setSexo(rs.getString("idSexo"));
+                cl.setSexo(rs.getString("sexo"));
                 miLista.add(cl);
             }
             
@@ -199,6 +199,5 @@ private final Connection cn;
         
     }
 }
-
 
 

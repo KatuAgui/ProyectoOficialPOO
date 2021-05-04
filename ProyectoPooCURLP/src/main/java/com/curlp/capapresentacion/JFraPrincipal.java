@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -25,6 +26,7 @@ public class JFraPrincipal extends javax.swing.JFrame {
      */
     public JFraPrincipal() throws SQLException {
         initComponents();
+        jLblPrincipal.setIcon(new ImageIcon("C:/Users/Admi/OneDrive/Escritorio/ProyectoOficial/ProyectoPooCURLP/src/main/java/com//curlp/imagenes/oficial.jpg"));
         this.setLocationRelativeTo(null);
     }
     

@@ -66,7 +66,7 @@ public class JFraPaciente extends javax.swing.JFrame {
             fila [11] = cl.getEstatura();
             fila [12] = cl.getCiudadProcedencia();
             fila [13] = cl.getEmail();
-            fila [14] = cl.getIdSexo();
+            fila [14] = cl.getSexo();
             return fila;
         }).forEachOrdered(temp::addRow);
     }
@@ -292,7 +292,7 @@ public class JFraPaciente extends javax.swing.JFrame {
             fila [11] = cl.getEstatura();
             fila [12] = cl.getCiudadProcedencia();
             fila [13] = cl.getEmail();
-            fila [14] = cl.getIdSexo();
+            fila [14] = cl.getSexo();
             return fila;
         }).forEachOrdered(temp::addRow);
     }
@@ -469,7 +469,7 @@ public class JFraPaciente extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel8.setText("Fecha Nacimiento");
 
-        jDCFechaNacimiento.setDateFormatString("yyy-MM-dd");
+        jDCFechaNacimiento.setDateFormatString("yyyy-MM-dd");
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel11.setText("Telefono Celular");
