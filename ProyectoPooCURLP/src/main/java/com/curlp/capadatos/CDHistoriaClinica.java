@@ -105,6 +105,7 @@ public class CDHistoriaClinica {
     //Metodo para poblar la tabla Historia Clinica
     public List<CLHistoriaClinica> obtenerListaHistoriaClinica() throws SQLException{
         String sql = "{CALL sp_mostrarHistoriaClinica()}";
+        
         List<CLHistoriaClinica> miLista = null;
         try{
             Statement st = cn.createStatement();
@@ -113,6 +114,44 @@ public class CDHistoriaClinica {
             while(rs.next()) {
                 CLHistoriaClinica cl = new CLHistoriaClinica();
                 
+                cl.setNumeroIdentidadPaciente(rs.getString("numeroIdentidad"));
+                cl.setFechaCreacion(rs.getString("historiaClinicaFechaCreacion"));
+                cl.setCardiobasculares(rs.getString("historiaClinicaCardiobasculares"));
+                cl.setPulmonares(rs.getString("historiaClinicaPulmonares"));
+                cl.setDigestivo(rs.getString("historiaClinicaDigestivo"));
+                cl.setDiabetes(rs.getString("historiaClinicaDiabetes"));
+                cl.setRenales(rs.getString("historiaClinicaRenales"));
+                cl.setQuirurgicos(rs.getString("historiaClinicaQuirurgicos"));
+                cl.setAlergicos(rs.getString("historiaClinicaAlergicos"));
+                cl.setTransfusiones(rs.getString("historiaClinicaTransfusiones"));
+                cl.setMedicamentos(rs.getString("historiaClinicaMedicamentos"));
+                cl.setObservaciones(rs.getString("historiaClinicaObservaciones"));
+                cl.setIdUsuario(rs.getInt("idUsuario"));
+                miLista.add(cl);
+            }
+            
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "error: "+ e.getMessage());
+        
+        }
+        return miLista;   
+    }
+    
+    //Metodo para poblar la tabla Historia Clinica
+    public List<CLHistoriaClinica> mostrarHistoriaClinicaCondicion(String numeroIdentidad) throws SQLException{
+        String sql = "{CALL sp_mostrarHistoriaClinicaCondicion(?)}";
+        
+        if("".equals(sql)){
+            JOptionPane.showMessageDialog(null, "Viene vacio", "SIMEC", JOptionPane.INFORMATION_MESSAGE);
+        }
+        List<CLHistoriaClinica> miLista = null;
+        try{
+            ps = cn.prepareStatement(sql);
+            ps.setString(1, numeroIdentidad);
+            rs = ps.executeQuery();
+            miLista = new ArrayList<>();
+            while(rs.next()) {
+                CLHistoriaClinica cl = new CLHistoriaClinica();
                 cl.setNumeroIdentidadPaciente(rs.getString("numeroIdentidad"));
                 cl.setFechaCreacion(rs.getString("historiaClinicaFechaCreacion"));
                 cl.setCardiobasculares(rs.getString("historiaClinicaCardiobasculares"));

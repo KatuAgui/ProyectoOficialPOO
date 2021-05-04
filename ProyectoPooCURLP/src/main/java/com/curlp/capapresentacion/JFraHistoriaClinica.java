@@ -308,7 +308,7 @@ public class JFraHistoriaClinica extends javax.swing.JFrame {
         }
 
     }
-    
+    // Metodo de confirmacion de eliminacion de Historia Clinica
     private void eliminar() throws SQLException{
         int resp = JOptionPane.showConfirmDialog(null, "Estas seguro de eliminar el registro", "SIMEC", JOptionPane.YES_NO_OPTION);
         if(resp == JOptionPane.YES_OPTION){
@@ -324,7 +324,31 @@ public class JFraHistoriaClinica extends javax.swing.JFrame {
             }
         }
     }
-    
+    //Metodo para poblar la tabla con condicion de campo busque
+    private void llenarTablaPorIdentidad(String numeroIdentidad) throws SQLException{
+        limpiarTabla();
+        CDHistoriaClinica cdh = new CDHistoriaClinica();
+        List<CLHistoriaClinica> miLista = cdh.mostrarHistoriaClinicaCondicion(numeroIdentidad);
+        DefaultTableModel temp = (DefaultTableModel) this.jTblHistoria.getModel();
+        
+        miLista.stream().map((CLHistoriaClinica cl) -> {
+            Object[] fila = new Object[13];
+            fila[0] = cl.getNumeroIdentidadPaciente();
+            fila[1] = cl.getFechaCreacion();
+            fila[2] = cl.getCardiobasculares();
+            fila[3] = cl.getPulmonares();
+            fila[4] = cl.getDigestivo();
+            fila[5] = cl.getDiabetes();
+            fila[6] = cl.getRenales();
+            fila[7] = cl.getQuirurgicos();
+            fila[8] = cl.getAlergicos();
+            fila[9] = cl.getTransfusiones();
+            fila[10] = cl.getMedicamentos();
+            fila[11] = cl.getObservaciones();
+            fila[12] = cl.getIdUsuario();
+            return fila;
+        }).forEachOrdered(temp::addRow);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -455,6 +479,11 @@ public class JFraHistoriaClinica extends javax.swing.JFrame {
         jBtnBuscar.setBackground(new java.awt.Color(255, 255, 255));
         jBtnBuscar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jBtnBuscar.setText("Buscar");
+        jBtnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnBuscarActionPerformed(evt);
+            }
+        });
 
         jBtnEliminar.setBackground(new java.awt.Color(255, 255, 255));
         jBtnEliminar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -745,6 +774,33 @@ public class JFraHistoriaClinica extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error al Eliminar el registro" + ex);
         }
     }//GEN-LAST:event_jBtnEliminarActionPerformed
+
+    private void jBtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBuscarActionPerformed
+        String numIdentidad;
+        numIdentidad = this.jTFIdentidad.getText().trim();
+       
+        if (this.jTFIdentidad.getText().trim().equals("")) {
+            this.jTFIdentidad.requestFocus();
+            try {
+                poblarTablaHistoriaClinica();
+            } catch (SQLException ex) {
+                Logger.getLogger(JFraHistoriaClinica.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            habilitarBotones(true, false, false, true);
+            limpiarTextField();
+        } else {
+            try {
+               llenarTablaPorIdentidad(numIdentidad);
+               this.jTFIdentidad.setText("");
+            } catch (SQLException ex) {
+                Logger.getLogger(JFraHistoriaClinica.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+            
+            
+       
+       
+    }//GEN-LAST:event_jBtnBuscarActionPerformed
 
     /**
      * @param args the command line arguments
