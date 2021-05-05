@@ -66,7 +66,7 @@ CREATE TABLE `citamedica` (
 
 LOCK TABLES `citamedica` WRITE;
 /*!40000 ALTER TABLE `citamedica` DISABLE KEYS */;
-INSERT INTO `citamedica` VALUES (8,'gripe','1970-01-01','12:00:00','01:00:00','0801-2000-00733',1),(9,'Migraña','1970-01-01','10:00:00','11:00:00','0801-1989-00244',1),(10,'Dolor estomacal','2021-05-03','09:00:00','10:00:00','1709-1989-00003',1);
+INSERT INTO `citamedica` VALUES (8,'gripe','1970-01-01','12:00:00','01:00:00','0801-2000-00733',1),(9,'Migraña','1989-09-16','09:00:00','10:00:00','0801-1989-00244',1);
 /*!40000 ALTER TABLE `citamedica` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -87,7 +87,7 @@ CREATE TABLE `consultamedica` (
   PRIMARY KEY (`idConsultasMedicas`),
   KEY `fk_consulta_medica_usuario1_idx` (`idUsuario`),
   CONSTRAINT `fk_consulta_medica_usuario1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,7 +96,7 @@ CREATE TABLE `consultamedica` (
 
 LOCK TABLES `consultamedica` WRITE;
 /*!40000 ALTER TABLE `consultamedica` DISABLE KEYS */;
-INSERT INTO `consultamedica` VALUES (37,'2021-05-03','malestares estomacales','nsp','0801-2000-00733',1),(40,'2021-05-04','Dolor estomacal','Antiespasmodico','1709-1989-00003',1);
+INSERT INTO `consultamedica` VALUES (37,'2021-05-29','malestares estomacales','nsp','0801-2000-00733',1),(40,'2021-05-06','Dolor estomacal','Antiespasmodico','1709-1989-00003',1);
 /*!40000 ALTER TABLE `consultamedica` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -122,7 +122,7 @@ CREATE TABLE `empleado` (
   KEY `fk_empleado_estado_empleado1_idx` (`idEstado`),
   CONSTRAINT `fk_empleado_estado_empleado1` FOREIGN KEY (`idEstado`) REFERENCES `estadoempleado` (`idEstado`),
   CONSTRAINT `fk_empleados_cargo1` FOREIGN KEY (`idCargo`) REFERENCES `cargo` (`idCargo`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -131,7 +131,7 @@ CREATE TABLE `empleado` (
 
 LOCK TABLES `empleado` WRITE;
 /*!40000 ALTER TABLE `empleado` DISABLE KEYS */;
-INSERT INTO `empleado` VALUES (1,'Luis','Antonio','Mendoza','Rodriguez','Choluteca','8765-0098',17,1);
+INSERT INTO `empleado` VALUES (1,'Luis','Miguel','Mendoza','Rodriguez','Choluteca','8765-0098',17,1),(14,'Astrid','Miriah','Hernandez','Solano','Choluteca','9898-0076',17,1),(15,'Cristian','Antonio','Aguilar','Garcia','Choluteca','8977-0989',17,1);
 /*!40000 ALTER TABLE `empleado` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -194,7 +194,7 @@ CREATE TABLE `historiaclinica` (
 
 LOCK TABLES `historiaclinica` WRITE;
 /*!40000 ALTER TABLE `historiaclinica` DISABLE KEYS */;
-INSERT INTO `historiaclinica` VALUES ('0801-2000-00733','2021-10-10','si','no','no','no','no','no','no','si','no','ninguna',1);
+INSERT INTO `historiaclinica` VALUES ('0801-1989-00244','2021-05-17','no','no','no','no','si','no','si','no','no','ninguna',1);
 /*!40000 ALTER TABLE `historiaclinica` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -233,7 +233,7 @@ CREATE TABLE `paciente` (
 
 LOCK TABLES `paciente` WRITE;
 /*!40000 ALTER TABLE `paciente` DISABLE KEYS */;
-INSERT INTO `paciente` VALUES ('0615-2000-00766','Ana','Yamileth','Garcia','Cruz','Diabetis','2000-05-09','O+','San Lorenzo, Valle','3266-0547',32.20,1.68,'Nacaome','ana@gmail.com',1),('0801-1989-00244','Carlos','Antonio','Espinoza','Corrales','ninguno','1970-01-01','O+','El Corpus','8970-1212',60.10,1.88,'Tegucigalpa','carl@gmail.com',2),('0801-2000-00733','Katia','Lisbeth','Aguilar','Garcia','ninguno','1970-01-01','A+','El Corpus, Choluteca','9800-7645',22.50,1.66,'Tegucigalpa','kat@g,ail.com',1),('1709-1989-00003','Kristel','Esther','Aguilar','Garcia','diabetes','1989-05-06','A+','San Marcos de Colon','8906-0098',34.90,1.78,'San Lorenzo','kristel@gmail.com',1);
+INSERT INTO `paciente` VALUES ('0615-2000-00766','Ana','Yamileth','Garcia','Cruz','Diabetis','2000-05-09','O+','San Lorenzo, Valle','3266-0547',32.20,1.68,'Nacaome','ana@gmail.com',1),('0801-1989-00244','Carlos','Antonio','Espinoza','Corrales','ninguno','1989-06-20','O+','El Corpus','8970-1212',60.10,1.88,'Tegucigalpa','carl@gmail.com',2),('0801-2000-00733','Katia','Lisbeth','Aguilar','Garcia','ninguno','2000-01-03','A+','El Corpus, Choluteca','9800-7645',22.50,1.66,'Tegucigalpa','kat@g,ail.com',1),('1709-1989-00003','Kristel','Esther','Aguilar','Garcia','diabetes','1989-05-06','A+','San Marcos de Colon','8906-0098',34.90,1.78,'San Lorenzo','kristel@gmail.com',1);
 /*!40000 ALTER TABLE `paciente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -282,7 +282,7 @@ CREATE TABLE `usuario` (
   KEY `fk_usuario_estado_empleado1_idx` (`idEstado`),
   CONSTRAINT `fk_usuario_empleados1` FOREIGN KEY (`idEmpleado`) REFERENCES `empleado` (`idEmpleado`),
   CONSTRAINT `fk_usuario_estado_empleado1` FOREIGN KEY (`idEstado`) REFERENCES `estadoempleado` (`idEstado`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -291,7 +291,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'luisiAn','1234','2020-10-10','2021-10-10',1,1);
+INSERT INTO `usuario` VALUES (1,'luisiAn','1234','2020-10-10','2021-10-10',1,1),(16,'cristAnto','8787','2021-05-05','2023-05-05',1,15);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -304,4 +304,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-05-04 23:30:51
+-- Dump completed on 2021-05-05  2:47:37
