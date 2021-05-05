@@ -401,8 +401,14 @@ public class JFraPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnCargoMouseClicked
 
     private void jBtnUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBtnUsuarioMouseClicked
-        JFraUsuario usuario = new JFraUsuario();
-        usuario.setVisible(true);
+         
+        try {
+            JFraUsuario usuario = new JFraUsuario();
+            usuario.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(JFraPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
 
         this.dispose();
     }//GEN-LAST:event_jBtnUsuarioMouseClicked

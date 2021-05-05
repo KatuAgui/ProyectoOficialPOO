@@ -373,7 +373,7 @@ public class JFraPaciente extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("S I S T E M A    C L I N I C O    S I M E C");
+        jLabel1.setText("V I S O R  P A C I E N T E S ");
 
         jLabel19.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(255, 255, 255));

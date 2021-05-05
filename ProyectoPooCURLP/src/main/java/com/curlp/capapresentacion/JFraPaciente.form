@@ -92,7 +92,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="S I S T E M A    C L I N I C O    S I M E C"/>
+            <Property name="text" type="java.lang.String" value="V I S O R  P A C I E N T E S "/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel19">
